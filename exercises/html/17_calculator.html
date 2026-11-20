@@ -5,23 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Calculator</title>
   <style>
-    :root { font-family: system-ui, sans-serif; }
-    body { max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
-    .card { border: 1px solid #d0d7de; border-radius: 12px; padding: 1.25rem; }
-    button, input { font: inherit; padding: .45rem .7rem; }
+    :root { font-family: system-ui, sans-serif; color: #172033; }
+    body { margin: 0; background: #eef3f8; }
+    .shell { max-width: 760px; margin: 32px auto; padding: 24px; }
+    .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 12px 30px #9aa5b1; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    button, input, select { font: inherit; padding: 9px 12px; }
+    button { border: 0; border-radius: 8px; background: #2563eb; color: white; cursor: pointer; }
+    #result { min-height: 48px; padding: 12px; border-radius: 8px; background: #f7f9fc; }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Calculator</h1>
-    <p id="result">Exercise 17: ready.</p>
-    <button id="action" type="button">Run exercise</button>
+  <main class="shell">
+    <section class="card">
+      <h1>Calculator</h1>
+      <p id="result">Ready</p>
+      <div class="row">
+        <input id="value" type="text" value="12">
+        <button id="action" type="button">Run</button>
+      </div>
+      <h2>Details</h2>
+      <ul>
+        <li>Standalone example</li>
+        <li>Browser-only implementation</li>
+        <li>Exercise number 17</li>
+      </ul>
+    </section>
   </main>
   <script>
-    const action = document.querySelector("#action");
+    const value = document.querySelector("#value");
     const result = document.querySelector("#result");
-    action.addEventListener("click", () => {
-      result.textContent = "Calculator example completed.";
+    document.querySelector("#action").addEventListener("click", () => {
+      const number = Number(value.value);
+      if (!Number.isFinite(number)) {
+        result.textContent = "Enter a valid number";
+        return;
+      }
+      const doubled = number * 2;
+      const squared = number * number;
+      result.textContent = `Input ${number}; doubled ${doubled}; squared ${squared}`;
     });
   </script>
 </body>
