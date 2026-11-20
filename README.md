@@ -1,10 +1,10 @@
 # HTML、CSS 與 JavaScript 練習
 
-**目前共 50 個實作練習單元。** 完整題號、來源與執行方式見 [CATALOG.md](CATALOG.md)，機器可讀清單見 [EXERCISES.json](EXERCISES.json)。
+完整題號、來源與執行方式見 [CATALOG.md](CATALOG.md)，機器可讀清單見 [EXERCISES.json](EXERCISES.json)。
 
 以下保留起步練習的說明；其餘題目按完整目錄閱讀。
 
-原本 htmlcss/ 與 js/ 保留。新增 [practice/](practice/) 用三個完整小工具串起表單、DOM、儲存與狀態操作，不需要打包工具或框架。
+原本 htmlcss/ 與 js/ 保留。新增 [practice/](practice/) 用小工具串起表單、DOM、儲存與狀態操作，不需要打包工具或框架。
 
 ## 開啟
 
@@ -37,4 +37,4 @@
 
 瀏覽器測試自動啟動本機伺服器，檢查保存、篩選、HTML 字串、金額、CSV、排序與 390px 版面。也可設定 BROWSER_EXECUTABLE 指向現有 Edge/Chrome。
 
-第 4–50 題位於 [互動實驗室](practice/lab/index.html)，可用選單或 #題目代號切換。所有 47 個單元都由瀏覽器實際操作測試，另保留原本三個小專案。
+開啟 [互動實驗室](practice/lab/index.html)，可用選單或 #題目代號切換。練習可用瀏覽器測試驗證。

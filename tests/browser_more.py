@@ -45,4 +45,4 @@ def run_labs(page,base):
         page.set_viewport_size({'width':390,'height':844})
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),('mobile overflow',item['slug'])
         print('lab',item['id'],item['slug'],'PASS')
-    print('47 additional browser labs passed')
+    print('Browser labs passed')

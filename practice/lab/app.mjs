@@ -19,7 +19,6 @@ function mount() {
   document.querySelector('#title').textContent = item.id + '. ' + item.title;
   document.querySelector('#goal').textContent = item.goal;
   cleanup = exercises[item.slug](document.querySelector('#lab'));
-  document.querySelector('#navigation').textContent = '本頁共有 ' + catalog.length + ' 個單元；題號 1–3 在原練習目錄。';
 }
 select.onchange = () => {
   history.replaceState(null, '', '#' + select.value);

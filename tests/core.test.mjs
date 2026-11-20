@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {exercises} from '../practice/lab/labs.mjs';
 import {parseCents, totals, toCsv} from '../practice/expenses/core.mjs';
 import {parseNumbers, insertionSteps} from '../practice/sorting/core.mjs';
-test('47 distinct browser labs match catalog IDs 4 through 50',()=>{
+test('Browser labs match the catalog and have distinct implementations',()=>{
   const catalog=JSON.parse(readFileSync(new URL('../practice/lab/catalog.json',import.meta.url),'utf8'));
   assert.equal(catalog.length,47);
   assert.deepEqual(catalog.map(item=>item.id),Array.from({length:47},(_,i)=>i+4));
