@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile + 訂單</title>
+  <link rel="stylesheet" href="./profile.css">
+  <script src="./profile.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <img src="./head.png" alt="logo">
+      <span>MyApp</span>
+    </div>
+
+    <nav class="nav">
+      <a class="navlink" href="./home.html">Dashboard</a>
+      <a class="navlink active" href="./profile.html">Profile</a>
+      <a class="navlink" href="./settings.html">Settings</a>
+    </nav>
+
+    <div class="actions">
+      <a class="btn ghost" href="./home.html">回加價購</a>
+      <button class="btn ghost" id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h1>Profile</h1>
+      <p class="muted">帳號資訊 + 模擬訂單紀錄</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Username</h3>
+          <p class="big mono" id="username">Loading...</p>
+        </div>
+        <div class="card">
+          <h3>Order Count</h3>
+          <p class="big mono" id="order-count">0</p>
+        </div>
+        <div class="card">
+          <h3>Cart Items</h3>
+          <p class="big mono" id="cart-count">0</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>訂單紀錄</h2>
+        <div class="row">
+          <button class="btn ghost" id="export-btn">匯出 JSON</button>
+          <button class="btn danger" id="clear-orders">清空訂單</button>
+        </div>
+      </div>
+
+      <div id="orders" class="orders"></div>
+    </section>
+
+    <section class="panel">
+      <h2>帳號動作</h2>
+      <div class="actions-row">
+        <a class="btn" href="./settings.html">去設定</a>
+        <button class="btn ghost" id="clear-cart">清空購物車</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+</body>
+</html>

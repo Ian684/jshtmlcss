@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>塔防遊戲</title>
+<style>
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at top,#3b4a71,#050712);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#f5f5f5;
+}
+.wrapper{
+  display:flex;
+  gap:18px;
+  padding:18px 26px;
+  background:rgba(0,0,0,.55);
+  border-radius:18px;
+  box-shadow:0 0 25px rgba(0,0,0,.7);
+  backdrop-filter:blur(4px);
+}
+canvas{
+  background:#111827;
+  border-radius:14px;
+  box-shadow:0 0 16px rgba(0,0,0,.6);
+}
+.panel{
+  width:260px;
+  padding:14px 16px 12px;
+  background:rgba(15,23,42,.95);
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:0 0 12px rgba(0,0,0,.5);
+  border:1px solid rgba(148,163,184,.25);
+}
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+}
+.panel h2{
+  margin:0;
+  font-size:18px;
+  letter-spacing:1px;
+}
+.panel small{
+  font-size:11px;
+  color:#9ca3af;
+}
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px 10px;
+  font-size:13px;
+  padding:6px 8px;
+  border-radius:10px;
+  background:radial-gradient(circle at top left,rgba(56,189,248,.1),rgba(15,23,42,.8));
+}
+.stats span.label{color:#9ca3af;}
+.stats span.value{font-weight:600;color:#f9fafb;}
+.tower-select-title{
+  font-size:13px;
+  margin-top:4px;
+  color:#e5e7eb;
+}
+.tower-select{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+.tower-card{
+  flex:1;
+  padding:6px 6px 4px;
+  border-radius:10px;
+  background:rgba(15,23,42,.9);
+  border:1px solid rgba(148,163,184,.4);
+  cursor:pointer;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  transition:.1s;
+}
+.tower-card:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 8px rgba(59,130,246,.5);
+}
+.tower-card.selected{
+  border-color:#38bdf8;
+  box-shadow:0 0 10px rgba(56,189,248,.7);
+  background:linear-gradient(145deg,rgba(37,99,235,.5),rgba(8,47,73,.9));
+}
+.tower-name{font-weight:600;font-size:12px;}
+.tower-tag{font-size:10px;opacity:.9;}
+.tower-cost{margin-top:2px;font-size:11px;color:#fde68a;}
+.tower-stats{font-size:10px;color:#9ca3af;line-height:1.2;}
+.hint{
+  margin-top:6px;
+  padding:6px 8px;
+  font-size:11px;
+  line-height:1.4;
+  border-radius:10px;
+  background:rgba(15,23,42,.95);
+  border:1px solid rgba(55,65,81,.9);
+}
+.msg{
+  margin-top:6px;
+  font-size:12px;
+  min-height:34px;
+  color:#fde68a;
+}
+.btn-row{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+button{
+  flex:1;
+  padding:7px 4px;
+  border-radius:9px;
+  border:none;
+  cursor:pointer;
+  font-size:12px;
+  background:linear-gradient(135deg,#3b82f6,#22c55e);
+  color:#fff;
+  font-weight:600;
+  box-shadow:0 0 10px rgba(0,0,0,.5);
+}
+button:disabled{
+  opacity:.55;
+  cursor:default;
+  box-shadow:none;
+}
+#resetBtn{background:linear-gradient(135deg,#f97316,#ef4444);}
+#pauseBtn{background:linear-gradient(135deg,#64748b,#0ea5e9);}
+#speedBtn{background:linear-gradient(135deg,#22c55e,#a3e635);}
+.tip-small{
+  margin-top:4px;
+  font-size:11px;
+  color:#9ca3af;
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <canvas id="game" width="640" height="480"></canvas>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>塔防遊戲</h2>
+    </div>
+
+    <div class="stats">
+      <span class="label">生命：</span><span class="value" id="life">20</span>
+      <span class="label">金錢：</span><span class="value" id="money">100</span>
+      <span class="label">波數：</span><span class="value" id="wave">1</span>
+      <span class="label">敵人：</span><span class="value" id="enemyCount">0</span>
+    </div>
+
+    <div class="tower-select-title">砲台：</div>
+    <div class="tower-select">
+      <div class="tower-card selected" data-type="basic">
+        <div class="tower-name">基礎</div>
+        <div class="tower-tag">均衡</div>
+        <div class="tower-cost">40</div>
+        <div class="tower-stats">射程中 / 傷害中</div>
+      </div>
+      <div class="tower-card" data-type="rapid">
+        <div class="tower-name">速射</div>
+        <div class="tower-tag">連射</div>
+        <div class="tower-cost">50</div>
+        <div class="tower-stats">射程短 / 速度快</div>
+      </div>
+      <div class="tower-card" data-type="sniper">
+        <div class="tower-name">狙擊</div>
+        <div class="tower-tag">遠距</div>
+        <div class="tower-cost">70</div>
+        <div class="tower-stats">射程長 / 高傷</div>
+      </div>
+    </div>
+
+    <div class="hint">
+      左鍵放砲台。點選砲台可升級（最高 Lv.3）。
+    </div>
+
+    <div class="btn-row">
+      <button id="startBtn">開始一波</button>
+      <button id="resetBtn">重置</button>
+    </div>
+    <div class="btn-row">
+      <button id="pauseBtn">暫停</button>
+      <button id="speedBtn">速度 x1</button>
+    </div>
+
+    <div class="tip-small">
+      同樣位置多種砲台搭配效果不同。
+    </div>
+
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+const lifeEl=document.getElementById("life");
+const moneyEl=document.getElementById("money");
+const waveEl=document.getElementById("wave");
+const enemyCountEl=document.getElementById("enemyCount");
+const msgEl=document.getElementById("msg");
+const startBtn=document.getElementById("startBtn");
+const resetBtn=document.getElementById("resetBtn");
+const pauseBtn=document.getElementById("pauseBtn");
+const speedBtn=document.getElementById("speedBtn");
+const towerCards=document.querySelectorAll(".tower-card");
+
+const TOWER_TYPES={
+  basic:{name:"基礎砲台",range:110,damage:25,fireDelay:24,cost:40,color:"#38bdf8"},
+  rapid:{name:"速射砲台",range:90,damage:14,fireDelay:12,cost:50,color:"#fb923c"},
+  sniper:{name:"狙擊砲台",range:180,damage:60,fireDelay:45,cost:70,color:"#a855f7"}
+};
+
+const ENEMY_TYPES=[
+  {name:"小兵",baseHp:80,speed:1.6,reward:8,color:"#f97373"},
+  {name:"快攻兵",baseHp:70,speed:2.4,reward:10,color:"#facc6b"},
+  {name:"坦克",baseHp:180,speed:0.9,reward:16,color:"#60a5fa"}
+];
+
+let selectedTowerType="basic";
+let enemies=[];
+let towers=[];
+let lasers=[];
+let path=[];
+let life=20;
+let money=100;
+let wave=1;
+let gameOver=false;
+let waveActive=false;
+let spawnsRemaining=0;
+let spawnCooldown=0;
+let spawnInterval=120;
+let paused=false;
+let speedMultiplier=1;
+let mouseX=0;
+let mouseY=0;
+
+canvas.addEventListener("mousemove",e=>{
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=canvas.width/rect.width;
+  const scaleY=canvas.height/rect.height;
+  mouseX=(e.clientX-rect.left)*scaleX;
+  mouseY=(e.clientY-rect.top)*scaleY;
+});
+
+function initPath(){
+  path=[
+    {x:40,y:420},
+    {x:600,y:420},
+    {x:600,y:280},
+    {x:120,y:280},
+    {x:120,y:120},
+    {x:620,y:120}
+  ];
+}
+
+class Enemy{
+  constructor(typeConfig,waveIndex){
+    this.type=typeConfig;
+    this.hpMax=typeConfig.baseHp+(waveIndex-1)*20;
+    this.hp=this.hpMax;
+    this.speed=typeConfig.speed+(waveIndex-1)*0.08;
+    this.reward=typeConfig.reward;
+    this.pathIndex=0;
+    this.x=path[0].x;
+    this.y=path[0].y;
+    this.radius=12;
+    this.color=typeConfig.color;
+  }
+  update(){
+    if(this.pathIndex>=path.length-1){
+      life-=1;
+      if(life<0)life=0;
+      lifeEl.textContent=life;
+      if(life<=0&&!gameOver){
+        gameOver=true;
+        msgEl.textContent="遊戲結束。";
+      }
+      return"reached-end";
+    }
+    const from=path[this.pathIndex];
+    const to=path[this.pathIndex+1];
+    let dx=to.x-this.x;
+    let dy=to.y-this.y;
+    let dist=Math.hypot(dx,dy);
+    if(dist<this.speed){
+      this.x=to.x;
+      this.y=to.y;
+      this.pathIndex++;
+    }else{
+      this.x+=(dx/dist)*this.speed;
+      this.y+=(dy/dist)*this.speed;
+    }
+    return"moving";
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.fillStyle=this.color;
+    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+    ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeStyle="#020617";
+    ctx.stroke();
+    const barWidth=26;
+    const barHeight=5;
+    const ratio=this.hp/this.hpMax;
+    ctx.fillStyle="#020617";
+    ctx.fillRect(this.x-barWidth/2,this.y-this.radius-8,barWidth,barHeight);
+    ctx.fillStyle="#22c55e";
+    ctx.fillRect(this.x-barWidth/2,this.y-this.radius-8,barWidth*ratio,barHeight);
+  }
+}
+
+class Tower{
+  constructor(x,y,typeKey){
+    this.x=x;
+    this.y=y;
+    this.typeKey=typeKey;
+    this.level=1;
+    const cfg=TOWER_TYPES[typeKey];
+    this.baseRange=cfg.range;
+    this.baseDamage=cfg.damage;
+    this.baseFireDelay=cfg.fireDelay;
+    this.color=cfg.color;
+    this.applyLevelStats();
+    this.cooldown=0;
+  }
+  applyLevelStats(){
+    this.range=this.baseRange*(1+0.2*(this.level-1));
+    this.damage=this.baseDamage*(1+0.4*(this.level-1));
+    const delayBonus=3*(this.level-1);
+    this.fireDelay=Math.max(this.baseFireDelay-delayBonus,6);
+  }
+  getUpgradeCost(){
+    const baseCost=TOWER_TYPES[this.typeKey].cost;
+    return baseCost*this.level;
+  }
+  upgrade(){
+    if(this.level>=3)return false;
+    this.level++;
+    this.applyLevelStats();
+    return true;
+  }
+  update(){
+    if(this.cooldown>0){
+      this.cooldown--;
+      return;
+    }
+    let target=null;
+    let minDist=Infinity;
+    for(let e of enemies){
+      const d=Math.hypot(e.x-this.x,e.y-this.y);
+      if(d<this.range&&d<minDist){
+        minDist=d;
+        target=e;
+      }
+    }
+    if(target){
+      target.hp-=this.damage;
+      this.cooldown=this.fireDelay;
+      lasers.push({x1:this.x,y1:this.y,x2:target.x,y2:target.y,life:4});
+    }
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.fillStyle=this.color;
+    ctx.arc(this.x,this.y,13,0,Math.PI*2);
+    ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeStyle="#020617";
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle="#e5e7eb";
+    ctx.arc(this.x,this.y-6,5,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle="#f9fafb";
+    ctx.font="10px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("Lv."+this.level,this.x,this.y+20);
+  }
+}
+
+function distancePointToSegment(px,py,ax,ay,bx,by){
+  const dx=bx-ax;
+  const dy=by-ay;
+  if(dx===0&&dy===0)return Math.hypot(px-ax,py-ay);
+  const t=((px-ax)*dx+(py-ay)*dy)/(dx*dx+dy*dy);
+  const tc=Math.max(0,Math.min(1,t));
+  const sx=ax+tc*dx;
+  const sy=ay+tc*dy;
+  return Math.hypot(px-sx,py-sy);
+}
+
+function distanceToPath(px,py){
+  let minDist=Infinity;
+  for(let i=0;i<path.length-1;i++){
+    const a=path[i];
+    const b=path[i+1];
+    const d=distancePointToSegment(px,py,a.x,a.y,b.x,b.y);
+    if(d<minDist)minDist=d;
+  }
+  return minDist;
+}
+
+function canPlaceTowerAt(x,y){
+  const dPath=distanceToPath(x,y);
+  if(dPath<30||dPath>130)return false;
+  for(let t of towers){
+    if(Math.hypot(t.x-x,t.y-y)<30)return false;
+  }
+  return true;
+}
+
+canvas.addEventListener("click",()=>{
+  if(gameOver){
+    msgEl.textContent="請按重置。";
+    return;
+  }
+  const x=mouseX;
+  const y=mouseY;
+  let clickedTower=null;
+  for(let t of towers){
+    if(Math.hypot(t.x-x,t.y-y)<=16){
+      clickedTower=t;
+      break;
+    }
+  }
+  if(clickedTower){
+    if(clickedTower.level>=3){
+      msgEl.textContent="已是 Lv.3。";
+      return;
+    }
+    const cost=clickedTower.getUpgradeCost();
+    if(money<cost){
+      msgEl.textContent="金錢不足，需 "+cost;
+      return;
+    }
+    money-=cost;
+    moneyEl.textContent=money;
+    clickedTower.upgrade();
+    msgEl.textContent="砲台升級 Lv."+clickedTower.level;
+    return;
+  }
+  const cfg=TOWER_TYPES[selectedTowerType];
+  const cost=cfg.cost;
+  if(money<cost){
+    msgEl.textContent="金錢不足。";
+    return;
+  }
+  if(!canPlaceTowerAt(x,y)){
+    msgEl.textContent="此處不能放。";
+    return;
+  }
+  towers.push(new Tower(x,y,selectedTowerType));
+  money-=cost;
+  moneyEl.textContent=money;
+  msgEl.textContent="建造 "+cfg.name;
+});
+
+function drawPath(){
+  ctx.lineWidth=26;
+  ctx.lineJoin="round";
+  ctx.lineCap="round";
+  ctx.beginPath();
+  ctx.strokeStyle="#fbbf24";
+  ctx.moveTo(path[0].x,path[0].y);
+  for(let i=1;i<path.length;i++)ctx.lineTo(path[i].x,path[i].y);
+  ctx.stroke();
+  ctx.lineWidth=14;
+  ctx.beginPath();
+  ctx.strokeStyle="#92400e";
+  ctx.moveTo(path[0].x,path[0].y);
+  for(let i=1;i<path.length;i++)ctx.lineTo(path[i].x,path[i].y);
+  ctx.stroke();
+  ctx.fillStyle="#4ade80";
+  ctx.beginPath();
+  ctx.arc(path[0].x,path[0].y,10,0,Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle="#f97373";
+  ctx.beginPath();
+  ctx.arc(path[path.length-1].x,path[path.length-1].y,10,0,Math.PI*2);
+  ctx.fill();
+}
+
+function startWave(){
+  if(gameOver){
+    msgEl.textContent="請先重置。";
+    return;
+  }
+  if(waveActive){
+    msgEl.textContent="目前波次尚未結束。";
+    return;
+  }
+  waveActive=true;
+  spawnsRemaining=8+wave*2;
+  spawnInterval=Math.max(60,150-wave*5);
+  spawnCooldown=0;
+  msgEl.textContent="第 "+wave+" 波。";
+}
+
+function updateGame(){
+  if(gameOver)return;
+  if(waveActive){
+    if(spawnCooldown>0)spawnCooldown--;
+    if(spawnCooldown<=0&&spawnsRemaining>0){
+      let typeIndex;
+      if(wave<=2)typeIndex=0;
+      else{
+        const r=Math.random();
+        if(r<0.55)typeIndex=0;
+        else if(r<0.8)typeIndex=1;
+        else typeIndex=2;
+      }
+      enemies.push(new Enemy(ENEMY_TYPES[typeIndex],wave));
+      spawnsRemaining--;
+      spawnCooldown=spawnInterval;
+    }
+    if(spawnsRemaining===0&&enemies.length===0){
+      waveActive=false;
+      wave++;
+      waveEl.textContent=wave;
+      if(!gameOver)msgEl.textContent="守住了，可以再開始一波。";
+    }
+  }
+  for(let t of towers)t.update();
+  for(let i=enemies.length-1;i>=0;i--){
+    const e=enemies[i];
+    const status=e.update();
+    if(status==="reached-end"){
+      enemies.splice(i,1);
+      continue;
+    }
+    if(e.hp<=0){
+      money+=e.reward;
+      moneyEl.textContent=money;
+      enemies.splice(i,1);
+    }
+  }
+  for(let i=lasers.length-1;i>=0;i--){
+    lasers[i].life--;
+    if(lasers[i].life<=0)lasers.splice(i,1);
+  }
+  enemyCountEl.textContent=enemies.length;
+}
+
+function drawGame(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle="rgba(148,163,184,.08)";
+  ctx.lineWidth=1;
+  for(let x=0;x<canvas.width;x+=40){
+    ctx.beginPath();
+    ctx.moveTo(x,0);
+    ctx.lineTo(x,canvas.height);
+    ctx.stroke();
+  }
+  for(let y=0;y<canvas.height;y+=40){
+    ctx.beginPath();
+    ctx.moveTo(0,y);
+    ctx.lineTo(canvas.width,y);
+    ctx.stroke();
+  }
+  drawPath();
+  let hoveredTower=null;
+  for(let t of towers){
+    if(Math.hypot(t.x-mouseX,t.y-mouseY)<=16){
+      hoveredTower=t;
+      break;
+    }
+  }
+  if(hoveredTower){
+    ctx.save();
+    ctx.setLineDash([6,4]);
+    ctx.strokeStyle="rgba(96,165,250,.6)";
+    ctx.lineWidth=1.2;
+    ctx.beginPath();
+    ctx.arc(hoveredTower.x,hoveredTower.y,hoveredTower.range,0,Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  for(let t of towers)t.draw();
+  for(let e of enemies)e.draw();
+  for(let l of lasers){
+    const a=l.life/4;
+    ctx.beginPath();
+    ctx.strokeStyle=`rgba(252,211,77,${a})`;
+    ctx.lineWidth=2;
+    ctx.moveTo(l.x1,l.y1);
+    ctx.lineTo(l.x2,l.y2);
+    ctx.stroke();
+  }
+  const canPlace=canPlaceTowerAt(mouseX,mouseY);
+  ctx.globalAlpha=.4;
+  ctx.beginPath();
+  ctx.fillStyle=canPlace?"#4ade80":"#f87171";
+  ctx.arc(mouseX,mouseY,13,0,Math.PI*2);
+  ctx.fill();
+  ctx.globalAlpha=1;
+  if(gameOver){
+    ctx.fillStyle="rgba(0,0,0,.65)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#f9fafb";
+    ctx.font="bold 32px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("Game Over",canvas.width/2,canvas.height/2-10);
+  }
+}
+
+function gameLoop(){
+  if(!paused&&!gameOver){
+    for(let i=0;i<speedMultiplier;i++){
+      updateGame();
+      if(gameOver)break;
+    }
+  }
+  drawGame();
+  requestAnimationFrame(gameLoop);
+}
+
+function resetGame(){
+  life=20;
+  money=100;
+  wave=1;
+  enemies=[];
+  towers=[];
+  lasers=[];
+  waveActive=false;
+  spawnsRemaining=0;
+  spawnCooldown=0;
+  gameOver=false;
+  paused=false;
+  speedMultiplier=1;
+  pauseBtn.textContent="暫停";
+  speedBtn.textContent="速度 x1";
+  lifeEl.textContent=life;
+  moneyEl.textContent=money;
+  waveEl.textContent=wave;
+  enemyCountEl.textContent=0;
+  msgEl.textContent="遊戲重置。";
+}
+
+towerCards.forEach(card=>{
+  card.addEventListener("click",()=>{
+    towerCards.forEach(c=>c.classList.remove("selected"));
+    card.classList.add("selected");
+    selectedTowerType=card.getAttribute("data-type");
+    const cfg=TOWER_TYPES[selectedTowerType];
+    msgEl.textContent="選擇："+cfg.name;
+  });
+});
+
+startBtn.addEventListener("click",startWave);
+resetBtn.addEventListener("click",resetGame);
+
+pauseBtn.addEventListener("click",()=>{
+  if(gameOver){
+    msgEl.textContent="請先重置。";
+    return;
+  }
+  paused=!paused;
+  pauseBtn.textContent=paused?"繼續":"暫停";
+});
+
+speedBtn.addEventListener("click",()=>{
+  if(speedMultiplier===1){
+    speedMultiplier=2;
+    speedBtn.textContent="速度 x2";
+  }else{
+    speedMultiplier=1;
+    speedBtn.textContent="速度 x1";
+  }
+});
+
+initPath();
+resetGame();
+gameLoop();
+</script>
+
+</body>
+</html>

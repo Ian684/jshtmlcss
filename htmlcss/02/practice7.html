@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <style>
+        #main-content p{
+            color:red;
+        }
+        #sub-content p{
+            color:blue;
+        }
+        #main-content2 > div > p{
+            color:green;
+        }
+        #main-content3 h1 + p{
+            color:purple;
+        }
+        span[class]{
+            color:orange;
+        }
+        a[href="http://www.google.com"]{
+            color:yellow;
+        }
+        /* a[href^="http://www"] */
+        /* a[href$=".com"] */
+        article p:first-child , article p:last-child{
+            color:cyan;
+        }
+        
+    </style>
+<body>
+    <div id="main-content">
+        <p>first</p>
+        <div id="sub-content">
+            <p>second</p>
+        </div>
+    </div>
+    <div id="main-content2">
+        <p>first</p>
+        <div>
+            <p>second</p>
+        </div>
+    </div>
+    <div id="main-content3">
+        <h1>title</h1>
+        <p>first</p>
+        <p>second</p>
+    </div>
+    <span class="class1">class</span>
+    <span class="class2">class2</span>
+    <a href="http://www.google.com">google</a>
+    <a href="http://www.facebook.com">facebook</a>
+    <a href="http://www.youtube.com">youtube</a>
+    <article>
+        <p>first</p>
+        <p>second</p>
+        <p>third</p>
+        <p>forth</p>
+        <p>fifth</p>
+    </article>
+</body>
+</html>

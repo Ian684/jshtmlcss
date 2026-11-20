@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calendar</title>
+    <link rel="stylesheet" href="page6.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+      <img src="pic/calendar.png" alt="calendar" style="width: 700px;">
+      <section class="events">
+        <h2 id="events-title">2025 Company Events</h2>
+        <ul class="event-list">
+          <!-- 右移點 -->
+          <li class="event-item">
+            <span class="event-date">Jan 15</span>
+            <p class="event-name"><b>New Year Kick-off Meeting</b> — Annual strategy kick-off</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Feb 10-14</span>
+            <p class="event-name"><b>Lunar New Year Holiday</b> — Company-wide holiday</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Mar 25</span>
+            <p class="event-name"><b>Quarterly Review Q1</b> — Performance & roadmap review</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Jun 5</span>
+            <p class="event-name"><b>Team Building Day</b> — Offsite activities</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Jul 20</span>
+            <p class="event-name"><b>Summer Company Trip</b> — Annual outing</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Sep 12</span>
+            <p class="event-name"><b>Quarterly Review Q3</b> — Progress check-in</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Oct 1-7</span>
+            <p class="event-name"><b>National Holiday</b> — Company-wide holiday</p>
+          </li>
+          <li class="event-item">
+            <span class="event-date">Dec 18</span>
+            <p class="event-name"><b>Year-End Party (YEP)</b> — Celebration & awards</p>
+          </li>
+        </ul>
+      </section>
+    </div>
+</body>
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

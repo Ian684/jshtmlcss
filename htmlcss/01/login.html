@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="./login.css">
+  <script src="./login.js" defer></script>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="brand">
+        <img src="./head.png" alt="logo" class="logo">
+        <h1>Welcome back</h1>
+        <p>Sign in to continue</p>
+      </div>
+
+      <form id="login" class="form" novalidate>
+        <label class="field">
+          <span>Username</span>
+          <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" required minlength="3">
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <div class="pw-row">
+            <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" required minlength="3">
+            <button type="button" class="pw-toggle" id="pw-toggle" aria-label="toggle password">👁</button>
+          </div>
+        </label>
+
+        <div class="row">
+          <label class="remember">
+            <input type="checkbox" id="remember">
+            <span>Remember me</span>
+          </label>
+          <a class="link" href="#">Forgot?</a>
+        </div>
+
+        <div id="msg" class="msg" aria-live="polite"></div>
+
+        <button id="login-btn" class="btn" type="submit">
+          <span class="btn-text">Login</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+
+        <div class="divider"><span>or</span></div>
+
+        <button type="button" class="btn ghost" id="demo-btn">Use Demo Account</button>
+
+        <p class="footer">
+          New here? <a class="link" href="#">Create account</a>
+        </p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+    <link rel="stylesheet" href="book.css">
+</head>
+<body>
+    <header>
+        <a href="book.html" id="logo">Book collector</a>
+        <nav>
+            <a href="" id="back" name="back"><strong>back</strong></a>
+            <a href="" id="next" name="next"><strong>next</strong></a>
+        </nav>
+        <nav>
+            <form action="./book.php" method="get" name="search">
+            <input type="text" placeholder="Search" id="search" name="search">
+            <input type="submit" value="Search">
+            <!-- search results -->
+            </form>
+        </nav>
+        <nav>
+            <form action="./book.php" method="get" name="append">
+            <input type="text" id="append" name="append" placeholder="Append new books">
+            <!-- more input -->
+             <!-- append -->
+            <input type="submit" value="Append">
+            </form>
+        </nav>
+        <nav>
+            <form action="./book.php" method="get" name="edit">
+            <input type="submit" id="edit" name="edit" value="edit">
+            <!-- books edit -->
+            </form>
+            <form action="./book.php" method="get" name="delete">
+            <input type="submit" id="delete" name="delete" value="delete">
+            <!-- appear x -->
+            </form>
+        </nav>
+    </header>
+    <main>
+        <table class="information">
+            <tr>
+                <td>name</td>
+                <td>author</td>
+                <td>year</td>
+                <td>category</td>
+                <td>score</td>
+                <td><a href="" id="remark">remark</a></td>
+            </tr>
+            <!-- more -->
+        </table>
+    </main>
+
+</body>
+</html>

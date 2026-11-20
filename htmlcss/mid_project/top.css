@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    color: #333;
+}
+.top {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: linear-gradient(135deg, SlateBlue, MediumSlateBlue);
+    border-radius: 20px;
+    padding: 15px 40px;
+    margin: 20px auto;
+    animation: drop-in 1s ease forwards;
+    will-change: transform, opacity;
+    height: 100px;
+    width: 1300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.top a img {
+    width: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top a img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.top h2 a {
+    text-decoration: none;
+    color: #f1f1f1;
+    font-size: 28px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-weight: bold;
+}
+.top h2 a:hover {
+    color: #ffe082;
+    text-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+@keyframes drop-in {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

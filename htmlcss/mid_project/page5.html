@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>financial</title>
+    <link rel="stylesheet" href="page5.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+      <img src="pic/finance.png" alt="finance" style="width: 700px;">
+      <ul>
+        <!-- 右移點 -->
+        <li><b>Revenue</b> grows steadily each quarter, ~<b>+7.7%</b> from Q1 to Q4.</li>
+        <li><b>Gross Profit Margin</b> stays stable around <b>40–42%</b> of revenue.</li>
+        <li><b>Operating Expenses</b> are controlled, up ~<b>15%</b> across the year.</li>
+        <li><b>Net Income</b> rises from <b>NT$92k</b> (Q1) to <b>NT$126k</b> (Q4), about <b>+37%</b>.</li>
+        <li>Overall, profitability is sustainable with expanding margins.</li>
+      </ul>
+    </div>
+</body>
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

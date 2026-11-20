@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 7: 完整的排數字遊戲</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #27ae60;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .step-info {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .step-info h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .step-info p {
+            color: #155724;
+            line-height: 1.8;
+        }
+        
+        /* 統計資訊 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-box h4 {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+        
+        .stat-box .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        /* 遊戲區域 */
+        .game-area {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        /* 3x3 網格 */
+        #game-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+        }
+        
+        /* 數字方塊 */
+        .tile {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            font-size: 2.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .tile:hover:not(.empty) {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tile.empty {
+            background: #ecf0f1;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: default;
+        }
+        
+        .tile.empty:hover {
+            transform: none;
+        }
+        
+        /* 正確位置的方塊 */
+        .tile.correct {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        /* 控制按鈕 */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* 訊息提示 */
+        .message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 完成動畫 */
+        @keyframes win {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.05); }
+            75% { transform: rotate(5deg) scale(1.05); }
+        }
+        
+        .tile.win {
+            animation: win 0.5s;
+        }
+        
+        /* 說明區 */
+        .explanation {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .explanation h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-nav {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: white;
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+        
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Step 7: 完整的排數字遊戲</h1>
+        
+        <div class="step-info">
+            <h3>🎯 本步驟學習目標</h3>
+            <p>✅ 實作打亂功能（隨機打亂方塊）</p>
+            <p>✅ 實作勝利判斷（檢查是否完成）</p>
+            <p>✅ 整合所有功能成完整遊戲</p>
+            <p>✅ 理解完整的遊戲開發流程</p>
+        </div>
+        
+        <!-- 訊息提示 -->
+        <div class="message" id="message"></div>
+        
+        <!-- 統計資訊 -->
+        <div class="stats">
+            <div class="stat-box">
+                <h4>移動次數</h4>
+                <div class="value" id="moveCount">0</div>
+            </div>
+            <div class="stat-box">
+                <h4>遊戲狀態</h4>
+                <div class="value" id="gameStatus" style="font-size: 1.5em;">進行中</div>
+            </div>
+        </div>
+        
+        <!-- 遊戲區域 -->
+        <div class="game-area">
+            <h2 style="color: #27ae60; margin-bottom: 20px; text-align: center;">排數字遊戲</h2>
+            <div id="game-container">
+                <!-- 方塊會動態產生 -->
+            </div>
+        </div>
+        
+        <!-- 控制按鈕 -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="newGame()">🎲 新遊戲</button>
+            <button class="btn btn-success" onclick="checkWin()">✓ 檢查答案</button>
+            <button class="btn btn-warning" onclick="showHint()">💡 提示</button>
+            <button class="btn btn-danger" onclick="autoSolve()">🤖 自動解答</button>
+        </div>
+        
+        <div class="explanation">
+            <h4>🎮 遊戲說明</h4>
+            <p><strong>目標：</strong>將數字 1-8 按順序排列，右下角為空白</p>
+            <p><strong>操作：</strong>點擊與空白相鄰的方塊來移動</p>
+            <p><strong>勝利：</strong>所有數字都在正確位置時獲勝</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="step6_swap_tiles.html" class="btn-nav">← 上一步</a>
+            <a href="dom_course_intro.html" class="btn-nav">回課程首頁</a>
+        </div>
+    </div>
+
+    <script>
+        console.log('=================================');
+        console.log('📚 DOM 教學 - Step 7 (完結篇)');
+        console.log('主題：完整的排數字遊戲');
+        console.log('👤 使用者：yienou');
+        console.log('📅 時間：2025-11-11 10:47:59 UTC');
+        console.log('=================================');
+        
+        // 遊戲狀態
+        let board = [];
+        let emptyPos = { row: 2, col: 2 };
+        let moveCount = 0;
+        let isGameOver = false;
+        
+        // 正確答案
+        const solution = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 0]
+        ];
+        
+        // 初始化遊戲
+        function initGame() {
+            board = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 0]
+            ];
+            emptyPos = { row: 2, col: 2 };
+            moveCount = 0;
+            isGameOver = false;
+            document.getElementById('moveCount').textContent = '0';
+            document.getElementById('gameStatus').textContent = '進行中';
+            renderBoard();
+        }
+        
+        // 渲染畫面
+        function renderBoard() {
+            let container = document.getElementById('game-container');
+            container.innerHTML = '';
+            
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    let number = board[row][col];
+                    let tile = document.createElement('div');
+                    tile.className = 'tile';
+                    
+                    if (number === 0) {
+                        tile.classList.add('empty');
+                        tile.textContent = '';
+                    } else {
+                        tile.textContent = number;
+                        
+                        // 檢查是否在正確位置
+                        if (board[row][col] === solution[row][col]) {
+                            tile.classList.add('correct');
+                        }
+                    }
+                    
+                    tile.dataset.row = row;
+                    tile.dataset.col = col;
+                    
+                    tile.addEventListener('click', function() {
+                        if (!isGameOver) {
+                            handleTileClick(row, col);
+                        }
+                    });
+                    
+                    container.appendChild(tile);
+                }
+            }
+        }
+        
+        // 判斷是否相鄰
+        function isAdjacent(row, col) {
+            let rowDiff = Math.abs(row - emptyPos.row);
+            let colDiff = Math.abs(col - emptyPos.col);
+            return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+        }
+        
+        // 處理方塊點擊
+        function handleTileClick(row, col) {
+            if (board[row][col] === 0) {
+                return;
+            }
+            
+            if (!isAdjacent(row, col)) {
+                showMessage('只能移動與空白相鄰的方塊！', 'warning');
+                return;
+            }
+            
+            // 交換方塊
+            let temp = board[row][col];
+            board[row][col] = board[emptyPos.row][emptyPos.col];
+            board[emptyPos.row][emptyPos.col] = temp;
+            
+            emptyPos.row = row;
+            emptyPos.col = col;
+            
+            moveCount++;
+            document.getElementById('moveCount').textContent = moveCount;
+            
+            renderBoard();
+            
+            // 檢查是否獲勝
+            if (checkWinCondition()) {
+                winGame();
+            }
+        }
+        
+        // 檢查是否獲勝
+        function checkWinCondition() {
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    if (board[row][col] !== solution[row][col]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        // 獲勝處理
+        function winGame() {
+            isGameOver = true;
+            document.getElementById('gameStatus').textContent = '完成！';
+            showMessage(`🎉 恭喜完成！用了 ${moveCount} 步`, 'success');
+            
+            // 添加勝利動畫
+            const tiles = document.querySelectorAll('.tile:not(.empty)');
+            tiles.forEach(tile => {
+                tile.classList.add('win');
+            });
+            
+            console.log(`🎉 遊戲完成！移動次數：${moveCount}`);
+        }
+        
+        // 新遊戲（打亂）
+        function newGame() {
+            initGame();
+            
+            // 隨機移動 20-30 次來打亂
+            const shuffleMoves = 20 + Math.floor(Math.random() * 11);
+            
+            for (let i = 0; i < shuffleMoves; i++) {
+                const validMoves = getValidMoves();
+                const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                
+                // 交換（不計入 moveCount）
+                let temp = board[randomMove.row][randomMove.col];
+                board[randomMove.row][randomMove.col] = board[emptyPos.row][emptyPos.col];
+                board[emptyPos.row][emptyPos.col] = temp;
+                emptyPos = randomMove;
+            }
+            
+            renderBoard();
+            showMessage('新遊戲開始！', 'success');
+            console.log(`已打亂 ${shuffleMoves} 次`);
+        }
+        
+        // 取得可移動的位置
+        function getValidMoves() {
+            const moves = [];
+            const directions = [
+                { row: -1, col: 0 },
+                { row: 1, col: 0 },
+                { row: 0, col: -1 },
+                { row: 0, col: 1 }
+            ];
+            
+            directions.forEach(dir => {
+                const newRow = emptyPos.row + dir.row;
+                const newCol = emptyPos.col + dir.col;
+                
+                if (newRow >= 0 && newRow < 3 && newCol >= 0 && newCol < 3) {
+                    moves.push({ row: newRow, col: newCol });
+                }
+            });
+            
+            return moves;
+        }
+        
+        // 檢查答案
+        function checkWin() {
+            if (checkWinCondition()) {
+                showMessage('✓ 正確！所有方塊都在正確位置', 'success');
+            } else {
+                let wrongCount = 0;
+                for (let row = 0; row < 3; row++) {
+                    for (let col = 0; col < 3; col++) {
+                        if (board[row][col] !== 0 && board[row][col] !== solution[row][col]) {
+                            wrongCount++;
+                        }
+                    }
+                }
+                showMessage(`還有 ${wrongCount} 個方塊位置不正確`, 'warning');
+            }
+        }
+        
+        // 顯示提示
+        function showHint() {
+            let wrongCount = 0;
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    if (board[row][col] !== 0 && board[row][col] !== solution[row][col]) {
+                        wrongCount++;
+                    }
+                }
+            }
+            showMessage(`💡 提示：還有 ${wrongCount} 個方塊需要移動`, 'warning');
+        }
+        
+        // 自動解答
+        function autoSolve() {
+            if (confirm('確定要自動解答嗎？這將重置遊戲。')) {
+                board = JSON.parse(JSON.stringify(solution));
+                emptyPos = { row: 2, col: 2 };
+                isGameOver = true;
+                renderBoard();
+                document.getElementById('gameStatus').textContent = '已解答';
+                showMessage('已自動解答', 'success');
+            }
+        }
+        
+        // 顯示訊息
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type} show`;
+            
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 初始化
+        initGame();
+        newGame();
+        
+        console.log('=================================');
+        console.log('✅ 遊戲已載入');
+        console.log('🎮 開始遊戲吧！');
+        console.log('=================================');
+    </script>
+</body>
+</html>

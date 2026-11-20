@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>feedback</title>
+    <link rel="stylesheet" href="page7.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+      <form action="">
+        <label for="feedback"><h2>write down your heart</h2></label>
+        <textarea name="feedback" id="feedback" placeholder="be honest"></textarea>
+        <input type="radio" name="feeling">
+        <label for="" id="feedback1">satisfy</label>
+        <input type="radio" name="feeling">
+        <label for="" id="feedback1">normal</label>
+        <input type="radio" name="feeling">
+        <label for="" id="feedback1">unsatisfy</label>
+        <input type="submit" value="submit">
+      </form>
+    <aside>
+      <h3>other feedbacks:</h3>
+      <select name="other-feebacks" id="other-feebacks">
+        <option value="satisfy">satisfy</option>
+        <option value="normal">normal</option>
+        <option value="unsatisfy">unsatisfy</option>
+      </select>
+      <div class="comments">
+        <div class="comment">
+          <strong>John:</strong>
+          <span>good</span>
+        </div>
+        <div class="comment">
+          <strong>Lisa:</strong>
+          <span>so so</span>
+        </div>
+        <div class="comment">
+          <strong>Kevin:</strong>
+          <span>bad</span>
+        </div>
+      </div>
+    </aside>
+    </div>
+    <!-- 延伸:js插入評論以及依照用戶選擇顯示不同滿意度評論 -->
+</body>
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

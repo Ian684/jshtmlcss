@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>首頁</title>
+  <link id="style" rel="stylesheet" href="style1.css">
+</head>
+<body>
+  <header>
+    <h1>歡迎來到我的網站</h1>
+    <nav>
+      <a href="#" id="s1">sheet1</a>
+      <a href="#" id="s2">sheet2</a>
+      <a href="#" id="s3">sheet3</a>
+      <a href="#" id="s0">nosheet</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>最新消息</h2>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae veritatis cupiditate doloremque molestias aperiam aspernatur dolore praesentium! Nemo asperiores aspernatur eos incidunt, nisi ex recusandae maxime culpa dignissimos deleniti minima.</p>
+    </section>
+    <section class="card">
+      <h2>精選內容</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad cumque eius beatae molestiae. Necessitatibus repellendus impedit doloribus minima, facilis ea. Ut modi, eos expedita autem culpa cum nam ea pariatur?</p>
+    </section>
+  </main>
+  <footer>
+        <p>All rights reserved.</p>
+        <p><a href="#">other informations</a></p>
+  </footer>
+    <script>
+    const stylelink = document.getElementById("style");
+    const buttons = {
+      s1: "style1.css",
+      s2: "style2.css",
+      s3: "style3.css",
+      s0: ""
+    };
+    Object.keys(buttons).forEach(id => {
+      document.getElementById(id).addEventListener("click", e => {
+        e.preventDefault();
+        if (buttons[id] === "") {
+          stylelink.removeAttribute("href");
+        } else {
+          stylelink.setAttribute("href", buttons[id]);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

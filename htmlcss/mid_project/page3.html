@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+    <link rel="stylesheet" href="page3.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+      <!-- 商品圖片點進之後的下訂頁面 -->
+      <div class="product product1">
+        <a href="">
+          <img src="pic/bottle.webp" alt="Smart Thermos Bottle">
+          <h3>Smart Thermos Bottle</h3>
+          <p>Made of 304 stainless steel, LED temperature display, keeps warm for 12+ hrs</p>
+          <span class="price">NT$890</span>
+        </a>
+      </div>
+
+      <div class="product product2">
+        <a href="">
+          <img src="pic/earphone.webp" alt="Bluetooth Noise-Cancelling Earphone">
+          <h3>Bluetooth Noise-Cancelling Earphone</h3>
+          <p>Lightweight in-ear, Bluetooth 5.3, up to 18 hours playtime</p>
+          <span class="price">NT$1,990</span>
+        </a>
+      </div>
+
+      <div class="product product3">
+        <a href="">
+          <img src="pic/eco bottle.webp" alt="Eco-Friendly Travel Cup">
+          <h3>Eco-Friendly Travel Cup</h3>
+          <p>Foldable silicone, heat-resistant from -20°C to 120°C</p>
+          <span class="price">NT$350</span>
+        </a>
+      </div>
+
+      <div class="product product4">
+        <a href="">
+          <img src="pic/lamp.webp" alt="Smart Desk Lamp">
+          <h3>Smart Desk Lamp</h3>
+          <p>Three brightness levels, USB charging, built-in digital clock</p>
+          <span class="price">NT$750</span>
+        </a>
+      </div>
+
+      <div class="product product5">
+        <a href="">
+          <img src="pic/charge.webp" alt="Wireless Charging Power Bank">
+          <h3>Wireless Charging Power Bank</h3>
+          <p>10000mAh, supports PD / QC fast charge, wireless output up to 15W</p>
+          <span class="price">NT$1,250</span>
+        </a>
+      </div>
+
+    </div>
+</body>
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

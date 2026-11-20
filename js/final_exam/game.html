@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>CS380 Project: Casino Roulette (Auto Demo)</title>
+    <style>
+        /* --- 全局設定 --- */
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        /* 1. 遊戲主桌面 (1200x750) */
+        #game-table {
+            width: 1200px;
+            height: 750px;
+            /* 高級絨布綠漸層背景 */
+            background: radial-gradient(circle at 30% 50%, #1e6036 0%, #0d2b18 80%); 
+            border: 15px solid #5d4037; /* 深木紋邊框 */
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 150px rgba(0,0,0,0.6);
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* 金色裝飾線 (內框) */
+        #game-table::after {
+            content: ''; position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 25px; pointer-events: none;
+        }
+
+        /* 課程標題浮水印 */
+        .course-title {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        /* --- 左側：輪盤與荷官區 --- */
+        #left-panel {
+            flex: 0 0 450px; /* 配合縮小的輪盤調整寬度 */
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+            margin-right: 40px; 
+            height: 100%;
+        }
+
+        /* 荷官區域 */
+        .dealer-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+        .avatar {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            background: #fff;
+            overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .dealer-info span { display: block; }
+        .dealer-name { color: #ffd700; font-weight: bold; font-size: 14px; }
+        .dealer-status { color: #aaa; font-size: 12px; }
+
+        /* 輪盤容器 (縮小至 420px) */
+        #wheel-container {
+            width: 420px; height: 420px;
+            position: relative;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+        }
+
+        canvas {
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px #4e342e, 0 0 0 16px #ffd700; 
+        }
+
+        #pointer {
+            position: absolute;
+            top: -25px; left: 195px; /* 420/2 - 15 = 195 */
+            width: 30px; height: 50px;
+            background: linear-gradient(to bottom, #ffd700, #ff8c00);
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        /* --- 右側：操作介面區 --- */
+        #interface-section {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            z-index: 5;
+        }
+
+        /* 下注桌 (Betting Board) */
+        .board-grid {
+            display: grid;
+            grid-template-columns: 50px repeat(12, 40px) 40px;
+            grid-template-rows: repeat(3, 45px) 40px 40px;
+            gap: 4px;
+        }
+
+        .cell {
+            display: flex; justify-content: center; align-items: center;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white; font-weight: bold; font-size: 14px;
+            cursor: pointer; border-radius: 4px;
+            transition: 0.1s; position: relative;
+        }
+        .cell:hover { background-color: rgba(255,215,0,0.3); border-color: gold; transform: scale(1.05); z-index: 10; }
+        
+        .red { background-color: rgba(211, 47, 47, 0.8); }
+        .black { background-color: rgba(33, 33, 33, 0.8); }
+        .green { background-color: rgba(56, 142, 60, 0.8); }
+        
+        .zero-cell { grid-row: 1 / span 3; grid-column: 1; font-size: 20px; border-radius: 8px 0 0 8px; }
+        
+        .bet-label { font-size: 10px; color: #ffd700; letter-spacing: 1px; }
+        .row-bet { grid-column: 14; writing-mode: vertical-rl; font-size: 10px; border-radius: 0 4px 4px 0; }
+
+        /* 底部儀表板 */
+        #dashboard {
+            display: flex;
+            gap: 20px;
+            height: 180px;
+        }
+
+        /* 控制台與玩家資訊 */
+        #controls {
+            flex: 2;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* 玩家頭像區 (右上角嵌入控制台) */
+        .player-badge {
+            position: absolute;
+            top: -15px; right: 20px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 20px;
+            padding: 5px 15px 5px 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .player-avatar { width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 1px solid #aaa; overflow: hidden;}
+        .player-name { font-size: 12px; color: #fff; font-weight: bold; }
+
+        .info-row { display: flex; justify-content: flex-start; gap: 40px; margin-top: 10px;}
+        .info-box label { font-size: 10px; color: #aaa; display: block; }
+        .info-box span { font-size: 22px; color: #ffd700; font-family: monospace; font-weight: bold; }
+
+        .chips-row { display: flex; gap: 10px; justify-content: flex-start; margin-bottom: 5px; align-items: center; }
+        .chips-label { font-size: 12px; color: #888; margin-right: 10px; }
+        .chip-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1); cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 11px; color: #111;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: 0.2s;
+        }
+        .chip-btn:hover { transform: translateY(-3px); }
+        .chip-btn.selected { border-color: gold; box-shadow: 0 0 15px gold; transform: scale(1.1); }
+        
+        .c10 { background: #e0e0e0; }
+        .c50 { background: #ef5350; color: white; }
+        .c100 { background: #42a5f5; color: white; }
+        .c500 { background: #263238; color: gold; border: 1px solid gold; }
+
+        .actions-row { display: flex; gap: 10px; margin-top: auto; }
+        .btn { flex: 1; padding: 10px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-clear { background: transparent; color: #ef5350; border: 1px solid #ef5350; }
+        .btn-clear:hover { background: #ef5350; color: white; }
+        .btn-spin { background: linear-gradient(to bottom, #ffd700, #f1c40f); color: #3e2723; box-shadow: 0 4px 10px rgba(255,215,0,0.3); font-size: 16px; }
+        .btn-spin:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .btn-spin:disabled { background: #555; color: #888; cursor: not-allowed; box-shadow: none; }
+        
+        /* 自動展示按鈕 */
+        .btn-demo { background: linear-gradient(to bottom, #42a5f5, #1e88e5); color: white; }
+        .btn-demo:hover { filter: brightness(1.2); }
+        .btn-demo.active { background: #e91e63; box-shadow: 0 0 15px #e91e63; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* 紀錄區 */
+        #log-panel {
+            flex: 1.2;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .log-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 15px;
+            font-size: 12px; color: #aaa;
+            border-bottom: 1px solid #444;
+            display: flex; justify-content: space-between;
+        }
+        .log-content {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            color: #ccc;
+        }
+        .log-content::-webkit-scrollbar { width: 6px; }
+        .log-content::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+
+        .log-item { margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
+        .log-win { color: #66bb6a; }
+        .log-lose { color: #ef5350; }
+        .log-info { color: #ffd700; }
+        .log-demo { color: #42a5f5; font-style: italic; }
+
+        /* 籌碼 */
+        .chip-on-board {
+            position: absolute; width: 20px; height: 20px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, gold, #b8860b);
+            border: 2px dashed white; box-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-size: 9px; font-weight: bold; color: black;
+            display: flex; justify-content: center; align-items: center;
+            pointer-events: none; z-index: 20;
+        }
+
+        /* 浮動訊息 */
+        #msg-overlay {
+            position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.8); padding: 10px 30px; border-radius: 30px;
+            border: 1px solid gold; color: gold; font-size: 24px; font-weight: bold;
+            opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 100;
+        }
+        
+        /* Demo 游標模擬 */
+        #demo-cursor {
+            position: absolute; width: 20px; height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid red; border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            display: none; transition: all 0.5s ease-in-out;
+            box-shadow: 0 0 10px white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-table">
+    <div class="course-title">CS380 Project</div>
+    
+    <!-- 浮動訊息 -->
+    <div id="msg-overlay">Place Your Bets</div>
+    
+    <!-- 自動展示游標 -->
+    <div id="demo-cursor"></div>
+
+    <!-- 左側：荷官與輪盤 -->
+    <div id="left-panel">
+        <!-- 荷官區 -->
+        <div class="dealer-area">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=DealerSophie&backgroundColor=b6e3f4" alt="Dealer">
+            </div>
+            <div class="dealer-info">
+                <span class="dealer-name">Dealer Sophie</span>
+                <span class="dealer-status">Table Open</span>
+            </div>
+        </div>
+
+        <!-- 輪盤 (縮小版) -->
+        <div id="wheel-container">
+            <div id="pointer"></div>
+            <canvas id="wheelCanvas" width="420" height="420"></canvas>
+        </div>
+    </div>
+
+    <!-- 右側：介面 -->
+    <div id="interface-section">
+        
+        <!-- 下注區 -->
+        <div class="board-grid" id="board">
+            <div class="cell green zero-cell" id="bet-0" onclick="placeBet('0', this)">0</div>
+            <!-- JS 生成 1-36，ID 為 bet-1, bet-2... -->
+            <div class="cell bet-label row-bet" id="bet-row3" style="grid-row:1" onclick="placeBet('row3', this)">2 to 1</div>
+            <div class="cell bet-label row-bet" id="bet-row2" style="grid-row:2" onclick="placeBet('row2', this)">2 to 1</div>
+            <div class="cell bet-label row-bet" id="bet-row1" style="grid-row:3" onclick="placeBet('row1', this)">2 to 1</div>
+            <div class="cell bet-label" id="bet-1st12" style="grid-row: 4; grid-column: 2 / span 4" onclick="placeBet('1st12', this)">1st 12</div>
+            <div class="cell bet-label" id="bet-2nd12" style="grid-row: 4; grid-column: 6 / span 4" onclick="placeBet('2nd12', this)">2nd 12</div>
+            <div class="cell bet-label" id="bet-3rd12" style="grid-row: 4; grid-column: 10 / span 4" onclick="placeBet('3rd12', this)">3rd 12</div>
+            <div class="cell bet-label" id="bet-1to18" style="grid-row: 5; grid-column: 2 / span 2" onclick="placeBet('1to18', this)">1-18</div>
+            <div class="cell bet-label" id="bet-even" style="grid-row: 5; grid-column: 4 / span 2" onclick="placeBet('even', this)">EVEN</div>
+            <div class="cell bet-label red" id="bet-red" style="grid-row: 5; grid-column: 6 / span 2" onclick="placeBet('red', this)">RED</div>
+            <div class="cell bet-label black" id="bet-black" style="grid-row: 5; grid-column: 8 / span 2" onclick="placeBet('black', this)">BLACK</div>
+            <div class="cell bet-label" id="bet-odd" style="grid-row: 5; grid-column: 10 / span 2" onclick="placeBet('odd', this)">ODD</div>
+            <div class="cell bet-label" id="bet-19to36" style="grid-row: 5; grid-column: 12 / span 2" onclick="placeBet('19to36', this)">19-36</div>
+        </div>
+
+        <!-- 儀表板 -->
+        <div id="dashboard">
+            <!-- 控制台 -->
+            <div id="controls">
+                <!-- 玩家標籤 -->
+                <div class="player-badge">
+                    <div class="player-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PlayerOne&backgroundColor=c0aede" alt="Player">
+                    </div>
+                    <span class="player-name">Student</span>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-box"><label>BALANCE</label><span id="balance">5000</span></div>
+                    <div class="info-box"><label>BET</label><span id="currentBet">0</span></div>
+                </div>
+                <div class="chips-row">
+                    <span class="chips-label">CHIPS:</span>
+                    <div class="chip-btn c10 selected" id="chip-10" onclick="selectChip(10, this)">10</div>
+                    <div class="chip-btn c50" id="chip-50" onclick="selectChip(50, this)">50</div>
+                    <div class="chip-btn c100" id="chip-100" onclick="selectChip(100, this)">100</div>
+                    <div class="chip-btn c500" id="chip-500" onclick="selectChip(500, this)">500</div>
+                </div>
+                <div class="actions-row">
+                    <button class="btn btn-clear" id="btnClear" onclick="clearBets()">CLEAR</button>
+                    <button class="btn btn-demo" id="btnDemo" onclick="toggleDemo()">AUTO DEMO</button>
+                    <button class="btn btn-spin" id="btnSpin" onclick="spin()">SPIN</button>
+                </div>
+            </div>
+
+            <!-- 紀錄區 -->
+            <div id="log-panel">
+                <div class="log-header">
+                    <span>GAME LOG</span>
+                    <span style="cursor:pointer" onclick="document.getElementById('log-content').innerHTML=''">🗑️</span>
+                </div>
+                <div class="log-content" id="log-content">
+                    <div class="log-item log-info">> CS380 Roulette System Ready</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // --- 1. 基礎設定 ---
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const CW = 420, CH = 420, CX = 210, CY = 210, RADIUS = 190;
+
+    const numbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
+    const redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+    const ARC = 2 * Math.PI / numbers.length;
+
+    let balance = 5000;
+    let currentChip = 10;
+    let bets = {}; 
+    let isSpinning = false;
+    let startAngle = 0;
+    let spinTime = 0;
+    let spinTotal = 0;
+    
+    // Demo 相關
+    let isDemoMode = false;
+    let demoStep = 0;
+    let demoTimer = null;
+    let riggedNumber = -1; // 作弊號碼
+
+    // --- 2. Canvas 繪圖 ---
+    function getColor(n) {
+        if(n===0) return '#2e7d32';
+        return redNums.includes(n) ? '#c62828' : '#212121';
+    }
+
+    function drawWheel() {
+        ctx.clearRect(0,0,CW,CH);
+        
+        // 外框
+        ctx.beginPath(); ctx.arc(CX, CY, RADIUS + 12, 0, Math.PI*2);
+        ctx.fillStyle = "#3e2723"; ctx.fill();
+        ctx.beginPath(); ctx.arc(CX, CY, RADIUS + 2, 0, Math.PI*2);
+        ctx.lineWidth = 4; ctx.strokeStyle = "#ffd700"; ctx.stroke();
+
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.rotate(startAngle);
+
+        for(let i=0; i<numbers.length; i++){
+            let a = i * ARC;
+            ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0, RADIUS, a, a+ARC);
+            ctx.fillStyle = getColor(numbers[i]); ctx.fill();
+            ctx.strokeStyle = "rgba(255,255,255,0.2)"; ctx.lineWidth = 1; ctx.stroke();
+
+            ctx.save();
+            ctx.rotate(a + ARC/2);
+            ctx.fillStyle = "#fff"; ctx.font = "bold 14px Arial"; 
+            ctx.fillText(numbers[i], RADIUS - 25, 6);
+            ctx.restore();
+        }
+        ctx.restore();
+
+        // 中心盤
+        ctx.beginPath(); ctx.arc(CX, CY, 50, 0, Math.PI*2);
+        ctx.fillStyle = "#eee"; ctx.fill();
+        ctx.beginPath(); ctx.arc(CX, CY, 35, 0, Math.PI*2);
+        ctx.fillStyle = "#222"; ctx.fill();
+        ctx.fillStyle = "#ffd700"; ctx.font = "bold 12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("ROYAL", CX, CY - 4);
+        ctx.fillText("CASINO", CX, CY + 12);
+    }
+
+    // --- 3. 邏輯與介面 ---
+    function log(msg, type="normal") {
+        const logContent = document.getElementById('log-content');
+        const div = document.createElement('div');
+        div.className = 'log-item';
+        if(type==='win') div.classList.add('log-win');
+        if(type==='lose') div.classList.add('log-lose');
+        if(type==='info') div.classList.add('log-info');
+        if(type==='demo') div.classList.add('log-demo');
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+        div.innerHTML = `[${time}] ${msg}`;
+        logContent.insertBefore(div, logContent.firstChild);
+    }
+
+    function spin() {
+        if(isSpinning) return;
+        let totalBet = Object.values(bets).reduce((a,b)=>a+b, 0);
+        if(totalBet === 0) { showMsg("Please Place a Bet"); return; }
+        isSpinning = true;
+        document.getElementById('btnSpin').disabled = true;
+        document.getElementById('btnClear').disabled = true;
+        showMsg("No More Bets...");
+        spinTime = 0;
+        spinTotal = 3000 + Math.random() * 2000;
+        
+        // 如果是 Demo 模式且有指定作弊號碼
+        if(isDemoMode && riggedNumber !== -1) {
+             // 計算需要旋轉到的角度
+             // 這裡為了簡化，直接在 stopSpin 強制覆蓋結果，視覺上可能會有一點點跳動但可接受
+             // 或者更進階：反算 spinTotal
+        }
+        
+        requestAnimationFrame(animate);
+    }
+
+    function animate(timestamp) {
+        spinTime += 20;
+        if(spinTime >= spinTotal) { stopSpin(); return; }
+        const t = spinTime / spinTotal;
+        const speed = 30 * (1 - t*t); 
+        startAngle += (speed * Math.PI / 180);
+        drawWheel();
+        requestAnimationFrame(animate);
+    }
+
+    function stopSpin() {
+        isSpinning = false;
+        document.getElementById('btnSpin').disabled = false;
+        document.getElementById('btnClear').disabled = false;
+        let deg = startAngle * 180 / Math.PI + 90;
+        let idx = Math.floor((360 - deg % 360) / (360/numbers.length));
+        if(idx<0) idx += numbers.length; if(idx>=numbers.length) idx=0;
+        let winNum = numbers[idx];
+        
+        // Demo 作弊邏輯
+        if(isDemoMode && riggedNumber !== -1) {
+            winNum = riggedNumber;
+            riggedNumber = -1; // 重置
+            // 強制修正指針視覺 (為了教學展示，稍微突兀沒關係)
+            // 找出 winNum 的 index
+            let targetIdx = numbers.indexOf(winNum);
+            // 反推角度 (大約)
+            let targetAngle = (360 - targetIdx * (360/numbers.length) - 90) * Math.PI / 180;
+            startAngle = targetAngle;
+            drawWheel();
+        }
+        
+        showMsg(`Result: ${winNum}`);
+        checkWin(winNum);
+        
+        // Demo 繼續下一步
+        if(isDemoMode) {
+            setTimeout(nextDemoStep, 3000);
+        }
+    }
+
+    function checkWin(winNum) {
+        let totalWin = 0;
+        let totalBet = Object.values(bets).reduce((a,b)=>a+b, 0);
+        let winDetails = [];
+
+        for(let type in bets) {
+            let amt = bets[type];
+            let win = false;
+            let multi = 0;
+            if(!isNaN(type)) { if(parseInt(type) === winNum) { win=true; multi=36; winDetails.push(`Num ${type}`); } }
+            else if(type === 'red' && redNums.includes(winNum)) { win=true; multi=2; winDetails.push('Red'); }
+            else if(type === 'black' && !redNums.includes(winNum) && winNum!=0) { win=true; multi=2; winDetails.push('Black'); }
+            else if(type === 'even' && winNum!=0 && winNum%2==0) { win=true; multi=2; winDetails.push('Even'); }
+            else if(type === 'odd' && winNum!=0 && winNum%2!=0) { win=true; multi=2; winDetails.push('Odd'); }
+            else if(type === '1st12' && winNum>=1 && winNum<=12) { win=true; multi=3; winDetails.push('1st 12'); }
+            else if(type === '2nd12' && winNum>=13 && winNum<=24) { win=true; multi=3; winDetails.push('2nd 12'); }
+            else if(type === '3rd12' && winNum>=25 && winNum<=36) { win=true; multi=3; winDetails.push('3rd 12'); }
+            else if(type === '1to18' && winNum>=1 && winNum<=18) { win=true; multi=2; winDetails.push('1-18'); }
+            else if(type === '19to36' && winNum>=19 && winNum<=36) { win=true; multi=2; winDetails.push('19-36'); }
+            else if(type.startsWith('row')) {
+                 let r = parseInt(type.replace('row',''));
+                 if(winNum>0 && winNum%3 === (r===3?0:r)) { win=true; multi=3; winDetails.push(`Row ${r}`); }
+            }
+
+            if(win) totalWin += amt * multi;
+        }
+
+        if(totalWin > 0) {
+            balance += totalWin;
+            log(`Win ${winNum}. +$${totalWin} (${winDetails.join(',')})`, 'win');
+            showMsg(`YOU WON $${totalWin}!`);
+        } else {
+            log(`Result ${winNum}. Lost $${totalBet}`, 'lose');
+        }
+        bets = {};
+        updateUI();
+        setTimeout(()=>{ document.querySelectorAll('.chip-on-board').forEach(el=>el.remove()); }, 3000);
+    }
+
+    function initBoard() {
+        const b = document.getElementById('board');
+        for(let i=1; i<=36; i++) {
+            let d = document.createElement('div');
+            d.className = 'cell ' + (redNums.includes(i)?'red':'black');
+            d.innerText = i;
+            d.id = `bet-${i}`; // 給每個格子 ID
+            d.onclick = ()=>placeBet(i, d);
+            let col = Math.ceil(i/3) + 1;
+            let row = (i%3===0)?1:(i%3===2?2:3);
+            d.style.gridColumn = col; d.style.gridRow = row;
+            b.appendChild(d);
+        }
+    }
+
+    function selectChip(val, el) {
+        currentChip = val;
+        document.querySelectorAll('.chip-btn').forEach(b=>b.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    function placeBet(type, el) {
+        if(isSpinning) return;
+        if(balance < currentChip) { showMsg("Insufficient Balance"); return; }
+        balance -= currentChip;
+        bets[type] = (bets[type]||0) + currentChip;
+        let chip = document.createElement('div');
+        chip.className = 'chip-on-board';
+        chip.innerText = currentChip;
+        let rx = (Math.random()-0.5)*10;
+        let ry = (Math.random()-0.5)*10;
+        chip.style.transform = `translate(${rx}px, ${ry}px)`;
+        el.appendChild(chip);
+        log(`Bet ${type}: $${currentChip}`);
+        updateUI();
+    }
+
+    function clearBets() {
+        if(isSpinning) return;
+        let total = Object.values(bets).reduce((a,b)=>a+b, 0);
+        balance += total; bets = {}; updateUI();
+        document.querySelectorAll('.chip-on-board').forEach(el=>el.remove());
+        log("Bets Cleared", 'info');
+    }
+
+    function updateUI() {
+        document.getElementById('balance').innerText = balance;
+        let total = Object.values(bets).reduce((a,b)=>a+b, 0);
+        document.getElementById('currentBet').innerText = total;
+    }
+
+    function showMsg(txt) {
+        let box = document.getElementById('msg-overlay');
+        box.innerText = txt; box.style.opacity = 1;
+        setTimeout(()=>{ if(box.innerText==txt) box.style.opacity=0; }, 3000);
+    }
+
+    // --- 自動展示 (Auto Demo) 系統 ---
+    const demoScenarios = [
+        // Case 1: 基本下注 (單號)
+        async () => {
+            log("--- Demo 1: Basic Bet ($10 on 17) ---", 'demo');
+            await demoClick('chip-10');
+            await demoClick('bet-17');
+            await demoSpin();
+        },
+        // Case 2: 顏色下注
+        async () => {
+            log("--- Demo 2: Color Bet ($50 on Red) ---", 'demo');
+            await demoClick('chip-50');
+            await demoClick('bet-red');
+            await demoSpin();
+        },
+        // Case 3: 組合下注 (偶數 + 第一區)
+        async () => {
+            log("--- Demo 3: Combo Bet ($100 on Even + 1st 12) ---", 'demo');
+            await demoClick('chip-100');
+            await demoClick('bet-even');
+            await demoClick('bet-1st12');
+            await demoSpin();
+        },
+        // Case 4: 大額下注
+        async () => {
+            log("--- Demo 4: High Roller ($500 on Black) ---", 'demo');
+            await demoClick('chip-500');
+            await demoClick('bet-black');
+            await demoSpin();
+        },
+        // Case 5: 清除下注
+        async () => {
+            log("--- Demo 5: Clear Bets (Regret) ---", 'demo');
+            await demoClick('chip-50');
+            await demoClick('bet-1');
+            await demoClick('bet-2');
+            await demoClick('bet-3');
+            await delay(500);
+            await demoClick('btnClear'); // 清除
+            await demoClick('bet-red'); // 改押紅
+            await demoSpin();
+        },
+        // Case 6: 必勝模式 (作弊贏 0 號)
+        async () => {
+            log("--- Demo 6: Winning Streak (Cheat: 0) ---", 'demo');
+            await demoClick('chip-500');
+            await demoClick('bet-0');
+            riggedNumber = 0; // 設定開獎結果
+            await demoSpin();
+            // 結束
+            setTimeout(() => { 
+                toggleDemo(); 
+                log("=== Demo Finished ===", 'demo');
+                showMsg("Demo Completed!");
+            }, 5000);
+        }
+    ];
+
+    function toggleDemo() {
+        isDemoMode = !isDemoMode;
+        const btn = document.getElementById('btnDemo');
+        if (isDemoMode) {
+            btn.classList.add('active');
+            btn.innerText = "STOP DEMO";
+            demoStep = 0;
+            nextDemoStep();
+        } else {
+            btn.classList.remove('active');
+            btn.innerText = "AUTO DEMO";
+            clearTimeout(demoTimer);
+            document.getElementById('demo-cursor').style.display = 'none';
+        }
+    }
+
+    function nextDemoStep() {
+        if (!isDemoMode) return;
+        if (demoStep < demoScenarios.length) {
+            demoScenarios[demoStep]();
+            demoStep++;
+        } else {
+            toggleDemo(); // 跑完自動停止
+        }
+    }
+
+    // 模擬滑鼠點擊效果
+    function demoClick(elementId) {
+        return new Promise(resolve => {
+            const el = document.getElementById(elementId);
+            const cursor = document.getElementById('demo-cursor');
+            if (!el) { resolve(); return; }
+            
+            const rect = el.getBoundingClientRect();
+            cursor.style.display = 'block';
+            
+            // 移過去
+            cursor.style.left = (rect.left + rect.width/2) + 'px';
+            cursor.style.top = (rect.top + rect.height/2) + 'px';
+            
+            setTimeout(() => {
+                // 模擬點擊動畫
+                cursor.style.transform = 'scale(0.8)';
+                el.click(); // 觸發真實點擊
+                setTimeout(() => {
+                    cursor.style.transform = 'scale(1)';
+                    resolve();
+                }, 200);
+            }, 600); // 移動時間
+        });
+    }
+
+    function demoSpin() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                document.getElementById('btnSpin').click();
+                resolve(); // 這裡 resolve 只是代表按了按鈕，實際等待是在 stopSpin 觸發 nextDemoStep
+            }, 500);
+        });
+    }
+    
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    initBoard();
+    drawWheel();
+    updateUI();
+
+</script>
+</body>
+</html>

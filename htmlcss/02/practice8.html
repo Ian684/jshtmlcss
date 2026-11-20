@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            color: red;
+        }
+        .test {
+            color: blue;
+        }
+        #demo {
+            color: green;
+        }
+        #demo {
+            color: black !important;
+        }
+        /*!important > inline > id > class > element */
+        body {
+            background-image: url('./OIP (1).webp');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        a:link {
+            color: red;
+        }
+        #testli:not(:hover){
+            color: green;
+        }
+        /* link visited hover active */
+        #title::first-letter {
+            color: red;
+        }
+        #testarticle::first-line{
+            color: violet;
+        }
+        #testarticle::selection{
+            color: blue;
+            background-color: yellow;
+        }
+        #test1::before /* after */{
+            content: "1st item: ";
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p class="test" id="demo" style="color: blueviolet;">first</p>
+    <a href="http://www.google.com">google</a>
+    <a href="http://www.facebook.com">facebook</a>
+    <a href="http://www.youtube.com">youtube</a>
+    <ul>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+        <li id="testli">1</li>
+    </ul>
+    <h1 id="title">title</h1>
+    <p id="testarticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis dolores iure, deserunt nesciunt corrupti ducimus officiis hic eius error rerum repellat, repudiandae accusamus quia optio ratione neque, quod soluta voluptatem.</p>
+    <ul>
+        <li id="test1">1</li>
+        <li id="test2">2</li>
+        <li id="test3">3</li>
+    </ul>
+</body>
+</html>

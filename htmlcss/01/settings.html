@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings</title>
+  <link rel="stylesheet" href="./settings.css">
+  <script src="./settings.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <img src="./head.png" alt="logo">
+      <span>MyApp</span>
+    </div>
+
+    <nav class="nav">
+      <a class="navlink" href="./home.html">Dashboard</a>
+      <a class="navlink" href="./profile.html">Profile</a>
+      <a class="navlink active" href="./settings.html">Settings</a>
+    </nav>
+
+    <div class="actions">
+      <button class="btn ghost" id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h1>Settings</h1>
+      <p class="muted">偏好、加價購資料管理、與安全操作。</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>目前登入</h3>
+          <p class="big mono" id="username">Loading...</p>
+        </div>
+        <div class="card">
+          <h3>主題</h3>
+          <p class="big mono" id="theme-label">dark</p>
+        </div>
+        <div class="card">
+          <h3>資料</h3>
+          <p class="big mono" id="data-state">—</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>偏好設定</h2>
+      </div>
+
+      <div class="form">
+        <div class="field">
+          <label>主題模式</label>
+          <div class="row">
+            <select class="select" id="theme">
+              <option value="dark">dark（預設）</option>
+              <option value="night">night（更深）</option>
+              <option value="soft">soft（更柔）</option>
+            </select>
+            <button class="btn" id="apply-theme">套用</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>加價購通知</label>
+          <div class="row">
+            <label class="toggle">
+              <input type="checkbox" id="notify">
+              <span class="track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>預設收件方式</label>
+          <div class="row">
+            <select class="select" id="ship">
+              <option value="standard">一般出貨</option>
+              <option value="fast">快速出貨（加價購）</option>
+              <option value="pickup">超商取貨</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn primary" id="save-pref">儲存偏好</button>
+          <button class="btn ghost" id="reset-pref">重置偏好</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>加價購資料管理</h2>
+        <p class="muted">清除購物車 / 清除訂單 / 匯出。</p>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="clear-cart">清空購物車</button>
+        <button class="btn danger" id="clear-orders">清空訂單</button>
+        <button class="btn ghost" id="export-all">匯出全部 JSON</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>安全</h2>
+      </div>
+
+      <div class="row">
+        <button class="btn danger" id="logout-all">登出（並返回登入頁）</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+</body>
+</html>

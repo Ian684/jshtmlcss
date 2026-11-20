@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>employees</title>
+    <link rel="stylesheet" href="page4.css">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>employees</title>
+    <link rel="stylesheet" href="page4.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+      <!-- 照片 -->
+      <div class="employee employee1">
+        <img src="/htmlcss/mid_project/pic/ODL1.jpg" alt="">
+        <h3>ian-engineer</h3>
+        <dl>
+        <dt>introduce</dt>
+        <dd>I am a software engineer with a strong background in designing and building scalable web applications and cloud-based systems. With several years of experience in the tech industry, I specialize in backend development, API integration, and DevOps practices. I'm passionate about using modern technologies to solve real-world problems and enjoy working in fast-paced, collaborative environments. Currently, I'm focused on developing high-performance services using tools like Node.js, Python, Docker, and AWS.<dd>
+        </dl>
+        <a href="mailto:ian516545@gmail.com">ian516545@gmail.com</a>
+      </div>
+      <div class="employee employee2">
+        <img src="/htmlcss/mid_project/pic/OIP (3).webp" alt="">
+        <h3>jason-designer</h3>
+        <dl>
+        <dt>introduce</dt>
+        <dd>I am a software engineer with a strong background in designing and building scalable web applications and cloud-based systems. With several years of experience in the tech industry, I specialize in backend development, API integration, and DevOps practices. I'm passionate about using modern technologies to solve real-world problems and enjoy working in fast-paced, collaborative environments. Currently, I'm focused on developing high-performance services using tools like Node.js, Python, Docker, and AWS.<dd>
+        </dl>
+        <a href="mailto:jason564613@gmail.com">jason564613@gmail.com</a>
+      </div>
+      <div class="employee employee3">
+        <img src="/htmlcss/mid_project/pic/下載.webp" alt="">
+        <h3>others-good partners</h3>
+        <dl>
+        <dt>introduce</dt>
+        <dd>I am a software engineer with a strong background in designing and building scalable web applications and cloud-based systems. With several years of experience in the tech industry, I specialize in backend development, API integration, and DevOps practices. I'm passionate about using modern technologies to solve real-world problems and enjoy working in fast-paced, collaborative environments. Currently, I'm focused on developing high-performance services using tools like Node.js, Python, Docker, and AWS.</dd>
+        </dl>
+        <a href="mailto:others654646@gmail.com">others654646@gmail.com</a>
+      </div>
+
+    </div>
+</body>
+
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

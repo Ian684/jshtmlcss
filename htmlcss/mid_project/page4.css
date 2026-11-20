@@ -1,0 +1,88 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center; 
+}
+.employee {
+    font-size: 1.3rem;
+    opacity: 0;
+    animation: left-appear 0.6s ease forwards;
+    will-change: transform, opacity;
+    width: 380px;
+}
+
+.employee {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: 50px;
+    transition: all 0.4s ease;
+}
+
+.employee:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(108,99,255,0.3);
+    background: linear-gradient(to bottom right, #f5f3ff, #eef0ff);
+}
+
+.employee img{
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.employee h3{
+    color: #6c63ff;
+    margin: 15px;
+    font-size: 1.4rem;
+}
+
+.employee dl{
+    margin: 15px;
+    color: #444;
+}
+
+.employee dt{
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #6c63ff;
+}
+
+.employee dd{
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.employee a{
+    display: block;
+    margin: 15px;
+    text-decoration: none;
+    color: #6c63ff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.employee a:hover{
+    color: white;
+    background-color: #6c63ff;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+.container .employee:nth-child(1) {animation-delay: 0.1s;}
+.container .employee:nth-child(2) {animation-delay: 0.2s;}
+.container .employee:nth-child(3) {animation-delay: 0.3s;}
+
+@keyframes left-appear {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

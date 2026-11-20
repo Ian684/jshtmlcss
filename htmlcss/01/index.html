@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyApp - Welcome</title>
+  <link rel="stylesheet" href="./site.css">
+  <script src="./site.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <img src="./head.png" alt="logo" />
+      <span>MyApp</span>
+    </div>
+    <nav class="nav">
+      <a class="navlink" href="./login.html">Login</a>
+      <a class="navlink" href="./home.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <section class="hero-card">
+      <h1>一個乾淨、可擴充的登入網站骨架</h1>
+      <p class="muted">
+        已串接 Cookie + JWT。你可以把它當作未來所有小專案的起手式。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="./login.html">去登入</a>
+        <button class="btn ghost" id="go-dashboard">我已登入，直接進 Dashboard</button>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Auth</h3>
+          <p class="muted">使用 /api/me 檢查登入狀態</p>
+        </div>
+        <div class="card">
+          <h3>Pages</h3>
+          <p class="muted">Dashboard / Profile / Settings</p>
+        </div>
+        <div class="card">
+          <h3>Logout</h3>
+          <p class="muted">一鍵登出清 cookie</p>
+        </div>
+      </div>
+
+      <p class="tiny muted">
+        提示：如果你用 Live Server（5500）開前端，Flask 用 5000 跑後端就能直接通。
+      </p>
+    </section>
+  </main>
+</body>
+</html>

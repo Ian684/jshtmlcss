@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>introduction</title>
+    <link rel="stylesheet" href="page2.css">
+</head>
+<body>
+    <div class="top-slot"></div>
+    <div class="container">
+        <div class="box">Oasis Technology Co.,Ltd.</div>
+        <div class="box">established year: 2012</div>
+        <div class="box">branches:taipai、tokyo</div>
+        <div class="box">CEO:ian wang</div>
+        <div class="box">employees:120</div>
+        <div class="box">services:cloud computing, AI solutions</div>
+        <div class="box">target markets:Asia, Europe</div>
+        <div class="box">core values:innovation, integrity</div>
+        <div class="box">key partners:Microsoft, Amazon</div>
+        <div class="box">tel: +886-2-1234-5678</div>
+        <div class="box">email:<a href="mailto:info@oasistech.com">info@oasistech.com</a></div>
+        <div class="box">address: 10F, No.88, Songgao Rd., Xinyi Dist., Taipei City 110, Taiwan (R.O.C.)</div>
+        <div class="box">website: <a href="www.oasistech.com">www.oasistech.com</a></div>
+    </div>
+</body>
+</html>
+<script>
+    fetch("top.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementsByClassName("top-slot")[0].innerHTML = data;
+      });
+</script>

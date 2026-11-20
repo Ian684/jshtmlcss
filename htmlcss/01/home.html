@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard + 加價購</title>
+  <link rel="stylesheet" href="./home.css">
+  <script src="./home.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <img src="./head.png" alt="logo">
+      <span>MyApp</span>
+    </div>
+
+    <nav class="nav">
+      <a class="navlink active" href="./home.html">Dashboard</a>
+      <a class="navlink" href="./profile_p.html">Profile</a>
+      <a class="navlink" href="./settings.html">Settings</a>
+    </nav>
+
+    <div class="actions">
+      <button class="icon-btn" id="cart-btn" title="購物車">
+        🛒 <span class="badge" id="cart-count">0</span>
+      </button>
+      <button class="btn ghost" id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h3>快捷入口</h3>
+      <ul>
+        <li class="active"><a class="slink" href="./home.html">加價購</a></li>
+        <li><a class="slink" href="./profile.html">帳號 / 訂單</a></li>
+        <li><a class="slink" href="./settings.html">偏好 / 安全</a></li>
+      </ul>
+
+      <div class="mini">
+        <p class="muted">登入帳號</p>
+        <p class="mono" id="whoami">Loading...</p>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="header-row">
+        <div>
+          <h1 id="welcome">Loading...</h1>
+          <p class="subtitle">Dashboard + 加價購</p>
+        </div>
+
+        <div class="pill">
+          <span class="dot"></span>
+          <span>Session Active</span>
+        </div>
+      </div>
+
+      <section class="grid">
+        <div class="card">
+          <h3>今日狀態</h3>
+          <p class="big" id="stat-orders">0</p>
+          <p class="muted">近 7 天訂單（模擬）</p>
+        </div>
+
+        <div class="card">
+          <h3>購物車</h3>
+          <p class="big" id="stat-cart">0</p>
+          <p class="muted">目前品項數</p>
+        </div>
+
+        <div class="card">
+          <h3>偏好</h3>
+          <p class="big" id="stat-theme">—</p>
+          <p class="muted">主題模式</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>加價購專區</h2>
+          <div class="filters">
+            <input class="input" id="q" placeholder="搜尋加價購…（例：保固/會員/運送）" />
+            <select class="select" id="cat">
+              <option value="all">全部類別</option>
+              <option value="service">服務</option>
+              <option value="shipping">運送</option>
+              <option value="membership">會員</option>
+              <option value="gift">禮盒</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="products" id="products"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>常見組合（快捷加購）</h2>
+          <p class="muted">一鍵把常用加購包塞進購物車。</p>
+        </div>
+
+        <div class="bundle-row">
+          <button class="btn" id="bundle-1">🔥 新手安心包（保固+快速出貨）</button>
+          <button class="btn" id="bundle-2">🎁 送禮包（禮盒+卡片+防撞加固）</button>
+          <button class="btn ghost" id="clear-cart">清空購物車</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Cart Drawer -->
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <h3>購物車</h3>
+      <button class="icon-btn" id="close-drawer" title="關閉">✖</button>
+    </div>
+
+    <div class="drawer-body" id="cart-items"></div>
+
+    <div class="drawer-foot">
+      <div class="total">
+        <span>小計</span>
+        <span class="mono" id="cart-total">$0</span>
+      </div>
+
+      <button class="btn primary" id="checkout-btn">結帳（建立模擬訂單）</button>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>4x4 排數字空白路徑</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f5f7;
+    }
+    .app {
+      background: #ffffff;
+      padding: 24px 28px 28px;
+      border-radius: 16px;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+      max-width: 480px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: #14864b;
+    }
+    .sub {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 18px;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .cell {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      border: 1px solid #e1e5ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafb;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04) inset;
+    }
+    .cell input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-size: 20px;
+      background: transparent;
+    }
+    .cell.blank {
+      background: #eef2f5;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .field {
+      flex: 1 1 120px;
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      color: #444;
+    }
+    .field label {
+      margin-bottom: 4px;
+    }
+    .field input {
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccd3dd;
+      font-size: 14px;
+      outline: none;
+    }
+    .field input:focus {
+      border-color: #18995a;
+      box-shadow: 0 0 0 1px rgba(24,153,90,0.18);
+    }
+    button {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px;
+      border-radius: 999px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg,#f9a826,#18a058);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.16);
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+    }
+    .result {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f4fbf7;
+      border: 1px solid #ccecd6;
+      font-size: 13px;
+      color: #195032;
+      min-height: 46px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #888;
+    }
+    .error {
+      background: #fff5f5;
+      border-color: #f5b5b5;
+      color: #9a1f1f;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <h1>4×4 排數字空白路徑</h1>
+  <div class="sub">留空代表空白格</div>
+
+  <div class="board" id="board"></div>
+
+  <div class="controls">
+    <div class="field">
+      <label for="targetNum">目標數字</label>
+      <input id="targetNum" type="number" min="1" max="15" value="15">
+    </div>
+    <div class="field">
+      <label for="targetRow">目標列（1～4）</label>
+      <input id="targetRow" type="number" min="1" max="4" value="4">
+    </div>
+    <div class="field">
+      <label for="targetCol">目標欄（1～4）</label>
+      <input id="targetCol" type="number" min="1" max="4" value="4">
+    </div>
+  </div>
+
+  <button id="solveBtn">計算空白路徑</button>
+
+  <div class="result" id="result"></div>
+
+  <div class="hint">路徑：0 左、1 上、2 下、3 右</div>
+</div>
+
+<script>
+  const boardEl = document.getElementById('board');
+  const resultEl = document.getElementById('result');
+  const solveBtn = document.getElementById('solveBtn');
+
+  function createBoard() {
+    const defaultBoard = [
+      1, 2, 3, 4,
+      5, 6, 7, 8,
+      9, 10, 11, 12,
+      13, "", 14, 15
+    ];
+    for (let i = 0; i < 16; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = defaultBoard[i];
+      input.addEventListener('input', () => {
+        if (input.value.trim() === "") cell.classList.add('blank');
+        else cell.classList.remove('blank');
+      });
+      if (defaultBoard[i] === "") cell.classList.add('blank');
+      cell.appendChild(input);
+      boardEl.appendChild(cell);
+    }
+  }
+  createBoard();
+
+  const MOVES = [
+    {dr: 0, dc: -1, code: '0'},
+    {dr: -1, dc: 0, code: '1'},
+    {dr: 1, dc: 0, code: '2'},
+    {dr: 0, dc: 1, code: '3'}
+  ];
+
+  function readBoard() {
+    const inputs = boardEl.querySelectorAll('input');
+    const arr = [];
+    inputs.forEach(i => {
+      const v = i.value.trim();
+      if (v === "") arr.push(0);
+      else arr.push(Number(v));
+    });
+    return arr;
+  }
+
+  function validBoard(arr) {
+    const cnt = Array(16).fill(0);
+    for (const v of arr) {
+      if (v < 0 || v > 15) return false;
+      cnt[v]++;
+    }
+    return cnt.every(c => c === 1);
+  }
+
+  function computePath(board, targetNum, tr, tc, maxSteps=40) {
+    const targetIndex = tr * 4 + tc;
+    if (board[targetIndex] === targetNum) return "";
+
+    const start = board.slice();
+    const blank = start.indexOf(0);
+    const q = [];
+    const vis = new Set();
+    q.push({st: start, b: blank, path: ""});
+    vis.add(start.join(","));
+
+    while (q.length) {
+      const {st, b, path} = q.shift();
+      if (st[targetIndex] === targetNum) return path;
+      if (path.length >= maxSteps) continue;
+
+      const r = Math.floor(b / 4), c = b % 4;
+      for (const m of MOVES) {
+        const nr = r + m.dr, nc = c + m.dc;
+        if (nr < 0 || nr >= 4 || nc < 0 || nc >= 4) continue;
+        const nb = nr * 4 + nc;
+
+        const ns = st.slice();
+        [ns[b], ns[nb]] = [ns[nb], ns[b]];
+
+        const key = ns.join(",");
+        if (vis.has(key)) continue;
+        vis.add(key);
+        q.push({st: ns, b: nb, path: path + m.code});
+      }
+    }
+    return null;
+  }
+
+  solveBtn.addEventListener('click', () => {
+    const arr = readBoard();
+    const targetNum = Number(document.getElementById('targetNum').value);
+    const tr = Number(document.getElementById('targetRow').value) - 1;
+    const tc = Number(document.getElementById('targetCol').value) - 1;
+
+    resultEl.classList.remove('error');
+
+    if (!validBoard(arr)) {
+      resultEl.classList.add('error');
+      resultEl.textContent = "盤面錯誤：需要 0～15 各一次（空白請留空）";
+      return;
+    }
+
+    const path = computePath(arr, targetNum, tr, tc);
+    if (path === null) {
+      resultEl.classList.add('error');
+      resultEl.textContent = "找不到路徑或超過步數上限";
+    } else {
+      resultEl.textContent = "路徑：" + path + "\n步數：" + path.length;
+    }
+  });
+</script>
+</body>
+</html>

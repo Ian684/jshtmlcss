@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Progress Bar</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; }
+    body { max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    .card { border: 1px solid #d0d7de; border-radius: 12px; padding: 1.25rem; }
+    button, input { font: inherit; padding: .45rem .7rem; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Progress Bar</h1>
+    <p id="result">Exercise 16: ready.</p>
+    <button id="action" type="button">Run exercise</button>
+  </main>
+  <script>
+    const action = document.querySelector("#action");
+    const result = document.querySelector("#result");
+    action.addEventListener("click", () => {
+      result.textContent = "Progress Bar example completed.";
+    });
+  </script>
+</body>
+</html>
