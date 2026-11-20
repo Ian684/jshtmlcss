@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Search Guess</title>
+<style>
+body{font-family:system-ui;margin:0;background:#edf2f7;color:#172033}
+main{max-width:720px;margin:48px auto;padding:24px}
+.card{background:white;border-radius:16px;padding:24px;box-shadow:0 12px 30px #ccd4dc}
+.row{display:flex;gap:12px}
+input,button{font:inherit;padding:10px}
+button{border:0;border-radius:8px;background:#1d4ed8;color:white}
+#result{min-height:36px;background:#f8fafc;padding:12px}
+</style>
+</head>
+<body>
+<main><section class="card">
+<h1>Binary Search Guess</h1>
+<p id="result">Ready</p>
+<div class="row"><input id="value" value="12"><button id="action">Run</button></div>
+<canvas width="300" height="100"></canvas>
+</section></main>
+<script>
+const value=document.querySelector('#value');
+const result=document.querySelector('#result');
+document.querySelector('#action').addEventListener('click',()=>{let lo=1,hi=100,secret=Number(value.value)||50;result.textContent='search target '+secret;});
+</script>
+</body>
+</html>
