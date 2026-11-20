@@ -1,0 +1,1078 @@
+[
+  {
+    "id": 4,
+    "slug": "dialog",
+    "title": "原生對話框",
+    "goal": "showModal、關閉與焦點",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#open"
+      },
+      {
+        "type": "visible",
+        "selector": "dialog"
+      },
+      {
+        "type": "click",
+        "selector": "#close"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "已關閉"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "details",
+    "title": "原生摺疊區",
+    "goal": "summary 與 toggle 事件",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "summary"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "展開"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "tabs",
+    "title": "無障礙頁籤",
+    "goal": "aria-selected 與 hidden 同步",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#tab-b"
+      },
+      {
+        "type": "visible",
+        "selector": "#panel-b"
+      },
+      {
+        "type": "hidden",
+        "selector": "#panel-a"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "carousel",
+    "title": "輪播卡片",
+    "goal": "索引繞回",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#prev"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "城市"
+      },
+      {
+        "type": "click",
+        "selector": "#next"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "山景"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "slug": "theme",
+    "title": "主題切換",
+    "goal": "局部樣式與色彩切換",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#toggle"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "深色"
+      },
+      {
+        "type": "style",
+        "selector": "#sample",
+        "property": "color",
+        "value": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "font_scale",
+    "title": "字級調整",
+    "goal": "range 與即時樣式",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#size",
+        "value": "28"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "28px"
+      },
+      {
+        "type": "style",
+        "selector": "#sample",
+        "property": "fontSize",
+        "value": "28px"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "slug": "grid",
+    "title": "Grid 欄數",
+    "goal": "repeat 與 minmax",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#columns",
+        "value": "4"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "4 欄"
+      },
+      {
+        "type": "gridColumns",
+        "selector": "#grid",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "slug": "flex",
+    "title": "Flex 對齊",
+    "goal": "justify-content 的效果",
+    "actions": [
+      {
+        "type": "select",
+        "selector": "#align",
+        "value": "space-between"
+      },
+      {
+        "type": "style",
+        "selector": "#flex",
+        "property": "justifyContent",
+        "value": "space-between"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "responsive",
+    "title": "容器自適應卡片",
+    "goal": "auto-fit 與寬度",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#width",
+        "value": "180"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "180px"
+      },
+      {
+        "type": "gridColumns",
+        "selector": "#preview",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "slug": "sticky",
+    "title": "捲動區固定標題",
+    "goal": "position:sticky 的容器",
+    "actions": [
+      {
+        "type": "scroll",
+        "selector": "#scroll",
+        "value": 200
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "200"
+      },
+      {
+        "type": "sticky",
+        "selector": "#sticky",
+        "parent": "#scroll"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "tooltip",
+    "title": "焦點提示",
+    "goal": "鍵盤也能顯示說明",
+    "actions": [
+      {
+        "type": "focus",
+        "selector": "#help"
+      },
+      {
+        "type": "visible",
+        "selector": "#tip"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "menu",
+    "title": "方向鍵選單",
+    "goal": "roving tabindex",
+    "actions": [
+      {
+        "type": "focus",
+        "selector": "[role=menuitem]:first-child"
+      },
+      {
+        "type": "press",
+        "selector": "[role=menuitem]:first-child",
+        "value": "ArrowDown"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "第二項"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "password_visibility",
+    "title": "密碼顯示切換",
+    "goal": "type 與 aria-pressed",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#toggle"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "顯示"
+      },
+      {
+        "type": "attribute",
+        "selector": "#password",
+        "name": "type",
+        "value": "text"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "password_meter",
+    "title": "規則計數器",
+    "goal": "明確規則不冒充安全評分",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#password",
+        "value": "Abcdefghijk1"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "4 / 4"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "slug": "character_count",
+    "title": "Unicode 字元計數",
+    "goal": "code point 與字串 length",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#text",
+        "value": "a貓🙂"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "3 字元"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "slug": "search",
+    "title": "即時篩選",
+    "goal": "文字節點與清單篩選",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#query",
+        "value": "ap"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "2 筆"
+      },
+      {
+        "type": "text",
+        "selector": "#list",
+        "value": "AppleApricot"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "slug": "table_sort",
+    "title": "可排序表格",
+    "goal": "資料排序後重畫",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#sort"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "Book,Cup,Pen"
+      },
+      {
+        "type": "click",
+        "selector": "#sort"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "Pen,Cup,Book"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "slug": "pagination",
+    "title": "清單分頁",
+    "goal": "頁碼邊界與按鈕停用",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#next"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "C,D"
+      },
+      {
+        "type": "click",
+        "selector": "#next"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "E"
+      },
+      {
+        "type": "disabled",
+        "selector": "#next"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "slug": "debounce",
+    "title": "輸入防抖",
+    "goal": "清除過期的計時器",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#query",
+        "value": "first"
+      },
+      {
+        "type": "fill",
+        "selector": "#query",
+        "value": "final"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "final"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "slug": "undo_counter",
+    "title": "可撤回計數器",
+    "goal": "歷史堆疊",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#add"
+      },
+      {
+        "type": "click",
+        "selector": "#add"
+      },
+      {
+        "type": "click",
+        "selector": "#undo"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "slug": "stopwatch",
+    "title": "碼錶",
+    "goal": "performance.now 與清除 interval",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#start"
+      },
+      {
+        "type": "wait",
+        "value": 250
+      },
+      {
+        "type": "click",
+        "selector": "#stop"
+      },
+      {
+        "type": "positive",
+        "selector": "#result"
+      },
+      {
+        "type": "click",
+        "selector": "#reset"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "0.0"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "slug": "countdown",
+    "title": "倒數計時",
+    "goal": "截止時刻而非逐次減量",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#seconds",
+        "value": "0.1"
+      },
+      {
+        "type": "click",
+        "selector": "#start"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "完成"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "slug": "stepper",
+    "title": "多步驟流程",
+    "goal": "狀態與進度同步",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#next"
+      },
+      {
+        "type": "click",
+        "selector": "#next"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "步驟 3 / 3"
+      },
+      {
+        "type": "disabled",
+        "selector": "#next"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "slug": "drag_drop",
+    "title": "拖放資料",
+    "goal": "dragstart、dragover 與 drop",
+    "actions": [
+      {
+        "type": "drag",
+        "selector": "#source",
+        "target": "#target"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "已放置"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "slug": "canvas_draw",
+    "title": "Canvas 畫筆",
+    "goal": "座標換算與 pointer 事件",
+    "actions": [
+      {
+        "type": "draw",
+        "selector": "#canvas"
+      },
+      {
+        "type": "notText",
+        "selector": "#result",
+        "value": "0 段"
+      },
+      {
+        "type": "click",
+        "selector": "#clear"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "0 段"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "slug": "canvas_chart",
+    "title": "Canvas 長條圖",
+    "goal": "資料比例與可存取文字",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#values",
+        "value": "1,3,2"
+      },
+      {
+        "type": "click",
+        "selector": "#draw"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "1,3,2"
+      },
+      {
+        "type": "canvasInk",
+        "selector": "#chart"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "slug": "svg_progress",
+    "title": "SVG 圓形進度",
+    "goal": "stroke-dashoffset",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#percent",
+        "value": "100"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "100%"
+      },
+      {
+        "type": "style",
+        "selector": "#ring",
+        "property": "strokeDashoffset",
+        "value": "0px"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "slug": "file_preview",
+    "title": "本機檔案預覽",
+    "goal": "File.text 與文字節點",
+    "actions": [
+      {
+        "type": "file",
+        "selector": "#file",
+        "content": "hello 貓"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "hello 貓"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "slug": "csv_parser",
+    "title": "CSV 引號狀態機",
+    "goal": "引號內逗號與成對引號",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#parse"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "[\"a\",\"b,c\"]"
+      },
+      {
+        "type": "fill",
+        "selector": "#csv",
+        "value": "\"open"
+      },
+      {
+        "type": "click",
+        "selector": "#parse"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "引號未閉合"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "slug": "json_viewer",
+    "title": "JSON 檢視器",
+    "goal": "例外處理與格式化",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#json",
+        "value": "{\"a\":[1,2]}"
+      },
+      {
+        "type": "click",
+        "selector": "#parse"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "{\n  \"a\": [\n    1,\n    2\n  ]\n}"
+      },
+      {
+        "type": "fill",
+        "selector": "#json",
+        "value": "bad"
+      },
+      {
+        "type": "click",
+        "selector": "#parse"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "JSON 格式錯誤"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "slug": "json_table",
+    "title": "JSON 記錄表格",
+    "goal": "欄位聯集與安全插入",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#render"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "2 列 / 2 欄"
+      },
+      {
+        "type": "count",
+        "selector": "#table tr",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "slug": "query_builder",
+    "title": "查詢字串",
+    "goal": "URLSearchParams 自動編碼",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#build"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "?q=a+b&page=1"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "slug": "url_inspector",
+    "title": "網址欄位",
+    "goal": "URL API 與協定白名單",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#inspect"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "example.test | 8443 | /a"
+      },
+      {
+        "type": "fill",
+        "selector": "#url",
+        "value": "javascript:alert(1)"
+      },
+      {
+        "type": "click",
+        "selector": "#inspect"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "網址格式錯誤"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "slug": "date_difference",
+    "title": "日期天數差",
+    "goal": "UTC 午夜避免夏令時間",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#calculate"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "2 天"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "slug": "timezone",
+    "title": "時區顯示",
+    "goal": "Intl.DateTimeFormat",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#format"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "08:00"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "slug": "unit_converter",
+    "title": "長度換算",
+    "goal": "以公尺作共同基準",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#convert"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "200 cm"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "slug": "temperature",
+    "title": "攝氏華氏換算",
+    "goal": "雙向公式與有限值",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#convert"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "0 °C"
+      },
+      {
+        "type": "fill",
+        "selector": "#fahrenheit",
+        "value": "212"
+      },
+      {
+        "type": "click",
+        "selector": "#convert"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "100 °C"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "slug": "rgb",
+    "title": "RGB 混色",
+    "goal": "三個 channel 與 hex 格式",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#r",
+        "value": "255"
+      },
+      {
+        "type": "range",
+        "selector": "#b",
+        "value": "128"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "#ff0080"
+      },
+      {
+        "type": "style",
+        "selector": "#swatch",
+        "property": "backgroundColor",
+        "value": "rgb(255, 0, 128)"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "slug": "hex_color",
+    "title": "Hex 顏色拆解",
+    "goal": "格式驗證與位元組",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#parse"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "18,171,255"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "slug": "gradient",
+    "title": "CSS 漸層",
+    "goal": "色彩輸入與角度",
+    "actions": [
+      {
+        "type": "range",
+        "selector": "#angle",
+        "value": "180"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "linear-gradient(180deg, #ff0000, #0000ff)"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "slug": "clipboard",
+    "title": "剪貼簿 API",
+    "goal": "安全來源與權限錯誤",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#copy"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "已複製"
+      },
+      {
+        "type": "clipboard",
+        "value": "copy me"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "slug": "keyboard",
+    "title": "鍵盤事件",
+    "goal": "排除輸入框內按鍵",
+    "actions": [
+      {
+        "type": "focus",
+        "selector": "#focus"
+      },
+      {
+        "type": "press",
+        "selector": "#focus",
+        "value": "Space"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "slug": "preferences",
+    "title": "本機偏好保存",
+    "goal": "localStorage JSON 結構",
+    "actions": [
+      {
+        "type": "fill",
+        "selector": "#name",
+        "value": "Ian"
+      },
+      {
+        "type": "click",
+        "selector": "#save"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "已保存"
+      },
+      {
+        "type": "reload"
+      },
+      {
+        "type": "value",
+        "selector": "#name",
+        "value": "Ian"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "slug": "session",
+    "title": "分頁工作階段",
+    "goal": "sessionStorage 與 reset",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#reset"
+      },
+      {
+        "type": "click",
+        "selector": "#visit"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "1"
+      },
+      {
+        "type": "reload"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "slug": "worker",
+    "title": "背景執行緒",
+    "goal": "Worker 訊息與資源清理",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#run"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "10 個"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "slug": "fetch",
+    "title": "讀取本機 JSON",
+    "goal": "fetch 狀態與 AbortController",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#load"
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "Pen,Book,Cup"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "slug": "intersection",
+    "title": "交集觀察器",
+    "goal": "容器捲動與解除觀察",
+    "actions": [
+      {
+        "type": "scroll",
+        "selector": "#viewport",
+        "value": 400
+      },
+      {
+        "type": "text",
+        "selector": "#result",
+        "value": "last"
+      }
+    ]
+  }
+]

@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "title": "待辦清單",
+    "source": "practice/todo/index.html",
+    "entry": "",
+    "goal": ""
+  },
+  {
+    "id": 2,
+    "title": "記帳工具",
+    "source": "practice/expenses/index.html",
+    "entry": "",
+    "goal": ""
+  },
+  {
+    "id": 3,
+    "title": "插入排序觀察",
+    "source": "practice/sorting/index.html",
+    "entry": "",
+    "goal": ""
+  },
+  {
+    "id": 4,
+    "title": "原生對話框",
+    "source": "practice/lab/labs.mjs",
+    "entry": "dialog",
+    "goal": "showModal、關閉與焦點"
+  },
+  {
+    "id": 5,
+    "title": "原生摺疊區",
+    "source": "practice/lab/labs.mjs",
+    "entry": "details",
+    "goal": "summary 與 toggle 事件"
+  },
+  {
+    "id": 6,
+    "title": "無障礙頁籤",
+    "source": "practice/lab/labs.mjs",
+    "entry": "tabs",
+    "goal": "aria-selected 與 hidden 同步"
+  },
+  {
+    "id": 7,
+    "title": "輪播卡片",
+    "source": "practice/lab/labs.mjs",
+    "entry": "carousel",
+    "goal": "索引繞回"
+  },
+  {
+    "id": 8,
+    "title": "主題切換",
+    "source": "practice/lab/labs.mjs",
+    "entry": "theme",
+    "goal": "局部樣式與色彩切換"
+  },
+  {
+    "id": 9,
+    "title": "字級調整",
+    "source": "practice/lab/labs.mjs",
+    "entry": "font_scale",
+    "goal": "range 與即時樣式"
+  },
+  {
+    "id": 10,
+    "title": "Grid 欄數",
+    "source": "practice/lab/labs.mjs",
+    "entry": "grid",
+    "goal": "repeat 與 minmax"
+  },
+  {
+    "id": 11,
+    "title": "Flex 對齊",
+    "source": "practice/lab/labs.mjs",
+    "entry": "flex",
+    "goal": "justify-content 的效果"
+  },
+  {
+    "id": 12,
+    "title": "容器自適應卡片",
+    "source": "practice/lab/labs.mjs",
+    "entry": "responsive",
+    "goal": "auto-fit 與寬度"
+  },
+  {
+    "id": 13,
+    "title": "捲動區固定標題",
+    "source": "practice/lab/labs.mjs",
+    "entry": "sticky",
+    "goal": "position:sticky 的容器"
+  },
+  {
+    "id": 14,
+    "title": "焦點提示",
+    "source": "practice/lab/labs.mjs",
+    "entry": "tooltip",
+    "goal": "鍵盤也能顯示說明"
+  },
+  {
+    "id": 15,
+    "title": "方向鍵選單",
+    "source": "practice/lab/labs.mjs",
+    "entry": "menu",
+    "goal": "roving tabindex"
+  },
+  {
+    "id": 16,
+    "title": "密碼顯示切換",
+    "source": "practice/lab/labs.mjs",
+    "entry": "password_visibility",
+    "goal": "type 與 aria-pressed"
+  },
+  {
+    "id": 17,
+    "title": "規則計數器",
+    "source": "practice/lab/labs.mjs",
+    "entry": "password_meter",
+    "goal": "明確規則不冒充安全評分"
+  },
+  {
+    "id": 18,
+    "title": "Unicode 字元計數",
+    "source": "practice/lab/labs.mjs",
+    "entry": "character_count",
+    "goal": "code point 與字串 length"
+  },
+  {
+    "id": 19,
+    "title": "即時篩選",
+    "source": "practice/lab/labs.mjs",
+    "entry": "search",
+    "goal": "文字節點與清單篩選"
+  },
+  {
+    "id": 20,
+    "title": "可排序表格",
+    "source": "practice/lab/labs.mjs",
+    "entry": "table_sort",
+    "goal": "資料排序後重畫"
+  },
+  {
+    "id": 21,
+    "title": "清單分頁",
+    "source": "practice/lab/labs.mjs",
+    "entry": "pagination",
+    "goal": "頁碼邊界與按鈕停用"
+  },
+  {
+    "id": 22,
+    "title": "輸入防抖",
+    "source": "practice/lab/labs.mjs",
+    "entry": "debounce",
+    "goal": "清除過期的計時器"
+  },
+  {
+    "id": 23,
+    "title": "可撤回計數器",
+    "source": "practice/lab/labs.mjs",
+    "entry": "undo_counter",
+    "goal": "歷史堆疊"
+  },
+  {
+    "id": 24,
+    "title": "碼錶",
+    "source": "practice/lab/labs.mjs",
+    "entry": "stopwatch",
+    "goal": "performance.now 與清除 interval"
+  },
+  {
+    "id": 25,
+    "title": "倒數計時",
+    "source": "practice/lab/labs.mjs",
+    "entry": "countdown",
+    "goal": "截止時刻而非逐次減量"
+  },
+  {
+    "id": 26,
+    "title": "多步驟流程",
+    "source": "practice/lab/labs.mjs",
+    "entry": "stepper",
+    "goal": "狀態與進度同步"
+  },
+  {
+    "id": 27,
+    "title": "拖放資料",
+    "source": "practice/lab/labs.mjs",
+    "entry": "drag_drop",
+    "goal": "dragstart、dragover 與 drop"
+  },
+  {
+    "id": 28,
+    "title": "Canvas 畫筆",
+    "source": "practice/lab/labs.mjs",
+    "entry": "canvas_draw",
+    "goal": "座標換算與 pointer 事件"
+  },
+  {
+    "id": 29,
+    "title": "Canvas 長條圖",
+    "source": "practice/lab/labs.mjs",
+    "entry": "canvas_chart",
+    "goal": "資料比例與可存取文字"
+  },
+  {
+    "id": 30,
+    "title": "SVG 圓形進度",
+    "source": "practice/lab/labs.mjs",
+    "entry": "svg_progress",
+    "goal": "stroke-dashoffset"
+  },
+  {
+    "id": 31,
+    "title": "本機檔案預覽",
+    "source": "practice/lab/labs.mjs",
+    "entry": "file_preview",
+    "goal": "File.text 與文字節點"
+  },
+  {
+    "id": 32,
+    "title": "CSV 引號狀態機",
+    "source": "practice/lab/labs.mjs",
+    "entry": "csv_parser",
+    "goal": "引號內逗號與成對引號"
+  },
+  {
+    "id": 33,
+    "title": "JSON 檢視器",
+    "source": "practice/lab/labs.mjs",
+    "entry": "json_viewer",
+    "goal": "例外處理與格式化"
+  },
+  {
+    "id": 34,
+    "title": "JSON 記錄表格",
+    "source": "practice/lab/labs.mjs",
+    "entry": "json_table",
+    "goal": "欄位聯集與安全插入"
+  },
+  {
+    "id": 35,
+    "title": "查詢字串",
+    "source": "practice/lab/labs.mjs",
+    "entry": "query_builder",
+    "goal": "URLSearchParams 自動編碼"
+  },
+  {
+    "id": 36,
+    "title": "網址欄位",
+    "source": "practice/lab/labs.mjs",
+    "entry": "url_inspector",
+    "goal": "URL API 與協定白名單"
+  },
+  {
+    "id": 37,
+    "title": "日期天數差",
+    "source": "practice/lab/labs.mjs",
+    "entry": "date_difference",
+    "goal": "UTC 午夜避免夏令時間"
+  },
+  {
+    "id": 38,
+    "title": "時區顯示",
+    "source": "practice/lab/labs.mjs",
+    "entry": "timezone",
+    "goal": "Intl.DateTimeFormat"
+  },
+  {
+    "id": 39,
+    "title": "長度換算",
+    "source": "practice/lab/labs.mjs",
+    "entry": "unit_converter",
+    "goal": "以公尺作共同基準"
+  },
+  {
+    "id": 40,
+    "title": "攝氏華氏換算",
+    "source": "practice/lab/labs.mjs",
+    "entry": "temperature",
+    "goal": "雙向公式與有限值"
+  },
+  {
+    "id": 41,
+    "title": "RGB 混色",
+    "source": "practice/lab/labs.mjs",
+    "entry": "rgb",
+    "goal": "三個 channel 與 hex 格式"
+  },
+  {
+    "id": 42,
+    "title": "Hex 顏色拆解",
+    "source": "practice/lab/labs.mjs",
+    "entry": "hex_color",
+    "goal": "格式驗證與位元組"
+  },
+  {
+    "id": 43,
+    "title": "CSS 漸層",
+    "source": "practice/lab/labs.mjs",
+    "entry": "gradient",
+    "goal": "色彩輸入與角度"
+  },
+  {
+    "id": 44,
+    "title": "剪貼簿 API",
+    "source": "practice/lab/labs.mjs",
+    "entry": "clipboard",
+    "goal": "安全來源與權限錯誤"
+  },
+  {
+    "id": 45,
+    "title": "鍵盤事件",
+    "source": "practice/lab/labs.mjs",
+    "entry": "keyboard",
+    "goal": "排除輸入框內按鍵"
+  },
+  {
+    "id": 46,
+    "title": "本機偏好保存",
+    "source": "practice/lab/labs.mjs",
+    "entry": "preferences",
+    "goal": "localStorage JSON 結構"
+  },
+  {
+    "id": 47,
+    "title": "分頁工作階段",
+    "source": "practice/lab/labs.mjs",
+    "entry": "session",
+    "goal": "sessionStorage 與 reset"
+  },
+  {
+    "id": 48,
+    "title": "背景執行緒",
+    "source": "practice/lab/labs.mjs",
+    "entry": "worker",
+    "goal": "Worker 訊息與資源清理"
+  },
+  {
+    "id": 49,
+    "title": "讀取本機 JSON",
+    "source": "practice/lab/labs.mjs",
+    "entry": "fetch",
+    "goal": "fetch 狀態與 AbortController"
+  },
+  {
+    "id": 50,
+    "title": "交集觀察器",
+    "source": "practice/lab/labs.mjs",
+    "entry": "intersection",
+    "goal": "容器捲動與解除觀察"
+  }
+]

@@ -76,6 +76,11 @@ try:
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), name + ' overflows mobile viewport'
                 if screenshots: page.screenshot(path=str(Path(screenshots) / (name + '.png')), full_page=True)
             assert not errors, errors
+            import sys
+            sys.path.insert(0,str(Path(__file__).resolve().parent))
+            from browser_more import run_labs
+            run_labs(page,base)
+            assert not errors, errors
             print('Browser: persistence, filtering, XSS text, money, CSV, sorting and 390px layout passed')
         finally: browser.close()
 finally:

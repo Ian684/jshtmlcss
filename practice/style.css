@@ -11,4 +11,10 @@ li{padding:12px 0;border-bottom:1px solid #e2e9e2;display:flex;gap:12px;align-it
 .bars{display:flex;align-items:end;gap:8px;min-height:190px;padding-top:35px}.bar{flex:1;min-width:8px;background:#467c5c;position:relative;border-radius:5px 5px 0 0}
 .bar span{position:absolute;top:-28px;width:100%;text-align:center;font-size:.85rem}.bar.active{background:#bd7725}.bar.negative{border:3px solid #9a3b36}
 input[type=checkbox]{width:20px;height:20px;flex:none}
+#exercise{width:100%;max-width:100%;display:block}
+#lab pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#lab textarea{width:100%;min-height:80px;font:inherit}
+#lab input,#lab select{max-width:100%}
+#lab table{border-collapse:collapse;max-width:100%;overflow-wrap:anywhere}
+#lab th,#lab td{border:1px solid #bfd1c2;padding:8px}
 @media(max-width:520px){main{margin:24px auto;padding:0 14px}section{padding:16px}input:not([type=checkbox]){width:100%}.bars{gap:4px}}
