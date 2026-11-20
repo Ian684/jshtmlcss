@@ -1,14 +1,11 @@
 # HTML, CSS and JavaScript Practice
 
-This repository collects small standalone web exercises.
-Open a file under `exercises/html/` directly in a browser.
+This repository contains standalone web exercises under `exercises/html/`. Open an HTML file directly in a modern browser.
 
-## Existing material
+## Validation
 
-- `htmlcss/`: HTML and CSS course exercises
-- `js/`: JavaScript course exercises
+```bash
+node --check <exercise>.html
+```
 
-## New exercises
-
-The `exercises/html/` directory contains 40 small, independent examples covering
-layout, forms, DOM manipulation, browser storage, canvas, timers and components.
+Most exercises are dependency-free and use browser APIs directly.
