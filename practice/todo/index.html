@@ -1,0 +1,5 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>待辦清單練習</title>
+<main><header><a href="../">回練習目錄</a><h1>待辦清單</h1><p>練習表單送出、事件與本機資料保存。</p></header><section>
+<form id="form"><label>新增事項<input id="task" maxlength="120" required autocomplete="off"></label><button>新增</button></form>
+<p id="message" class="message" role="status"></p><label>顯示<select id="filter"><option value="all">全部</option><option value="open">未完成</option><option value="done">已完成</option></select></label>
+<p id="count" aria-live="polite"></p><ul id="list"></ul></section></main><script type="module" src="app.js"></script></html>

@@ -1,0 +1,5 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>記帳練習</title>
+<main><header><a href="../">回練習目錄</a><h1>今天花了多少</h1><p>金額先轉成整數分，避免小數加總誤差。本頁為單次練習，重新整理即清空。</p></header><section>
+<form id="form"><label>分類<input id="category" maxlength="40" required value="餐飲"></label><label>金額<input id="amount" inputmode="decimal" required placeholder="85.50"></label><button>加入</button></form>
+<p class="message" id="message" role="status"></p><p>總支出（TWD）</p><output id="total" class="total" aria-live="polite">0.00</output><ul id="list"></ul>
+<h2>分類統計</h2><ul id="summary"></ul><button id="export" class="secondary">匯出 CSV</button></section></main><script type="module" src="app.js"></script></html>

@@ -1,9 +1,0 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clipboard Api</title>
-<style>body{margin:0;font-family:system-ui;background:#eef2f7;color:#172033}main{max-width:760px;margin:48px auto;padding:20px}section{background:#fff;border-radius:16px;padding:24px;box-shadow:0 12px 30px #ccd4df}button,input,select{font:inherit;padding:.55rem .7rem;margin:.25rem}#output{margin-top:16px;padding:14px;background:#f7f9fc;border-radius:8px;min-height:3rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.box{height:60px;background:#2563eb}nav button{margin-right:6px}canvas{width:100%;height:180px;background:#111827}</style></head>
-<body><main><section><h1>Clipboard Api</h1><p>Interactive exercise: clipboard api</p><div id="controls"></div><div id="output" aria-live="polite">Ready</div></section></main>
-<script>
-const controls=document.querySelector('#controls'),output=document.querySelector('#output');
-const topic='clipboard-api';
-controls.innerHTML='<button id=paste>Paste from clipboard</button><button id=copy>Copy example</button>';controls.querySelector('#copy').onclick=async()=>{await navigator.clipboard.writeText('clipboard API example');output.textContent='Copied'};controls.querySelector('#paste').onclick=async()=>{try{output.textContent=await navigator.clipboard.readText()}catch(e){output.textContent='Clipboard read requires permission'}};
-</script></body></html>

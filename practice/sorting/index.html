@@ -1,0 +1,6 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>插入排序逐步觀察</title>
+<main><header><a href="../">回練習目錄</a><h1>插入排序，一步一步看</h1><p>橘色是本步改動的位置；紅框表示負數。移動過程可能暫時出現重複值，插入後才會恢復。</p></header><section>
+<form id="form"><label>整數陣列<input id="numbers" value="7, 3, -2, 3, 5" required></label><button>重新開始</button></form><p id="error" class="message" role="alert"></p>
+<div id="bars" class="bars" aria-hidden="true"></div><p id="values" aria-label="目前陣列"></p><p id="note" aria-live="polite"></p>
+<div class="actions"><button id="previous" class="secondary">上一步</button><button id="next">下一步</button><output id="progress"></output></div>
+<p>時間複雜度：平均與最差 O(n²)，已排序輸入 O(n)。視覺化另存每步快照，記憶體成本高於原地排序。</p></section></main><script type="module" src="app.js"></script></html>

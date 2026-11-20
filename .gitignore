@@ -1,2 +1,10 @@
 .DS_Store
 *.log
+
+# Generated practice artifacts
+__pycache__/
+*.pyc
+**/target/
+*.vcd
+*.vvp
+/.practice-build/

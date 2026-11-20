@@ -1,9 +1,0 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tip Calculator</title>
-<style>body{margin:0;font-family:system-ui;background:#eef2f7;color:#172033}main{max-width:760px;margin:48px auto;padding:20px}section{background:#fff;border-radius:16px;padding:24px;box-shadow:0 12px 30px #ccd4df}button,input,select{font:inherit;padding:.55rem .7rem;margin:.25rem}#output{margin-top:16px;padding:14px;background:#f7f9fc;border-radius:8px;min-height:3rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.box{height:60px;background:#2563eb}nav button{margin-right:6px}canvas{width:100%;height:180px;background:#111827}</style></head>
-<body><main><section><h1>Tip Calculator</h1><p>Interactive exercise: tip calculator</p><div id="controls"></div><div id="output" aria-live="polite">Ready</div></section></main>
-<script>
-const controls=document.querySelector('#controls'),output=document.querySelector('#output');
-const topic='tip-calculator';
-controls.innerHTML='<input id=bill type=number value=80><input id=tip type=number value=18><button>Calculate</button>';controls.querySelector('button').onclick=()=>{let b=+controls.querySelector('#bill').value,t=+controls.querySelector('#tip').value;output.textContent=`Tip: ${(b*t/100).toFixed(2)}; total: ${(b*(1+t/100)).toFixed(2)}`};
-</script></body></html>

@@ -1,7 +1,0 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web Worker</title>
-<style>body{margin:0;font-family:system-ui;background:#eef2f7;color:#172033}main{max-width:760px;margin:48px auto;padding:20px}section{background:#fff;border-radius:16px;padding:24px;box-shadow:0 12px 30px #ccd4df}button,input,select{font:inherit;padding:.55rem .7rem;margin:.25rem}#output{margin-top:16px;padding:14px;background:#f7f9fc;border-radius:8px;min-height:3rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.box{height:60px;background:#2563eb}nav button{margin-right:6px}canvas{width:100%;height:180px;background:#111827}</style></head>
-<body><main><section><h1>Web Worker</h1><p>Interactive exercise: worker thread</p><div id="controls"></div><div id="output" aria-live="polite">Ready</div></section></main>
-<script>
-const controls=document.querySelector('#controls'),output=document.querySelector('#output');controls.innerHTML='<button id=run>Calculate in worker</button>';const code=`onmessage=e=>{let n=e.data,sum=0;for(let i=1;i<=n;i++)sum+=i;postMessage(sum)};`;const worker=new Worker(URL.createObjectURL(new Blob([code],{type:'text/javascript'})));worker.onmessage=e=>output.textContent='Worker sum: '+e.data;controls.querySelector('#run').onclick=()=>worker.postMessage(1000);
-</script></body></html>
