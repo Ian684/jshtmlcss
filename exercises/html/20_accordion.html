@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>accordion</title>
+<style>
+:root{--accent20:hsl(180 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 20: accordion</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='accordion';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-20-42>accordion detail 42</div>
+<div data-exercise-20-43>accordion detail 43</div>
+<div data-exercise-20-44>accordion detail 44</div>
+<div data-exercise-20-45>accordion detail 45</div>
+<div data-exercise-20-46>accordion detail 46</div>
+<div data-exercise-20-47>accordion detail 47</div>
+<div data-exercise-20-48>accordion detail 48</div>
+<div data-exercise-20-49>accordion detail 49</div>
+<div data-exercise-20-50>accordion detail 50</div>
+<div data-exercise-20-51>accordion detail 51</div>
+<div data-exercise-20-52>accordion detail 52</div>
+<div data-exercise-20-53>accordion detail 53</div>
+<div data-exercise-20-54>accordion detail 54</div>
+<div data-exercise-20-55>accordion detail 55</div>
+<div data-exercise-20-56>accordion detail 56</div>
+<div data-exercise-20-57>accordion detail 57</div>
+<div data-exercise-20-58>accordion detail 58</div>
+<div data-exercise-20-59>accordion detail 59</div>
+<div data-exercise-20-60>accordion detail 60</div>
+<div data-exercise-20-61>accordion detail 61</div>
+<div data-exercise-20-62>accordion detail 62</div>
+<div data-exercise-20-63>accordion detail 63</div>
+<div data-exercise-20-64>accordion detail 64</div>
+<div data-exercise-20-65>accordion detail 65</div>
+<div data-exercise-20-66>accordion detail 66</div>
+<div data-exercise-20-67>accordion detail 67</div>
+<div data-exercise-20-68>accordion detail 68</div>
+<div data-exercise-20-69>accordion detail 69</div>
+<div data-exercise-20-70>accordion detail 70</div>
+<div data-exercise-20-71>accordion detail 71</div>
+<div data-exercise-20-72>accordion detail 72</div>
+<div data-exercise-20-73>accordion detail 73</div>
+<div data-exercise-20-74>accordion detail 74</div>
+<div data-exercise-20-75>accordion detail 75</div>
+<div data-exercise-20-76>accordion detail 76</div>
+<div data-exercise-20-77>accordion detail 77</div>
+<div data-exercise-20-78>accordion detail 78</div>
+<div data-exercise-20-79>accordion detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>

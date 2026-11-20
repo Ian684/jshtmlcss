@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>view-transition</title>
+<style>
+:root{--accent10:hsl(90 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 10: view-transition</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='view-transition';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-10-42>view-transition detail 42</div>
+<div data-exercise-10-43>view-transition detail 43</div>
+<div data-exercise-10-44>view-transition detail 44</div>
+<div data-exercise-10-45>view-transition detail 45</div>
+<div data-exercise-10-46>view-transition detail 46</div>
+<div data-exercise-10-47>view-transition detail 47</div>
+<div data-exercise-10-48>view-transition detail 48</div>
+<div data-exercise-10-49>view-transition detail 49</div>
+<div data-exercise-10-50>view-transition detail 50</div>
+<div data-exercise-10-51>view-transition detail 51</div>
+<div data-exercise-10-52>view-transition detail 52</div>
+<div data-exercise-10-53>view-transition detail 53</div>
+<div data-exercise-10-54>view-transition detail 54</div>
+<div data-exercise-10-55>view-transition detail 55</div>
+<div data-exercise-10-56>view-transition detail 56</div>
+<div data-exercise-10-57>view-transition detail 57</div>
+<div data-exercise-10-58>view-transition detail 58</div>
+<div data-exercise-10-59>view-transition detail 59</div>
+<div data-exercise-10-60>view-transition detail 60</div>
+<div data-exercise-10-61>view-transition detail 61</div>
+<div data-exercise-10-62>view-transition detail 62</div>
+<div data-exercise-10-63>view-transition detail 63</div>
+<div data-exercise-10-64>view-transition detail 64</div>
+<div data-exercise-10-65>view-transition detail 65</div>
+<div data-exercise-10-66>view-transition detail 66</div>
+<div data-exercise-10-67>view-transition detail 67</div>
+<div data-exercise-10-68>view-transition detail 68</div>
+<div data-exercise-10-69>view-transition detail 69</div>
+<div data-exercise-10-70>view-transition detail 70</div>
+<div data-exercise-10-71>view-transition detail 71</div>
+<div data-exercise-10-72>view-transition detail 72</div>
+<div data-exercise-10-73>view-transition detail 73</div>
+<div data-exercise-10-74>view-transition detail 74</div>
+<div data-exercise-10-75>view-transition detail 75</div>
+<div data-exercise-10-76>view-transition detail 76</div>
+<div data-exercise-10-77>view-transition detail 77</div>
+<div data-exercise-10-78>view-transition detail 78</div>
+<div data-exercise-10-79>view-transition detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>

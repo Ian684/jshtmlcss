@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>worker-thread</title>
+<style>
+:root{--accent08:hsl(72 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 08: worker-thread</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='worker-thread';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-08-42>worker-thread detail 42</div>
+<div data-exercise-08-43>worker-thread detail 43</div>
+<div data-exercise-08-44>worker-thread detail 44</div>
+<div data-exercise-08-45>worker-thread detail 45</div>
+<div data-exercise-08-46>worker-thread detail 46</div>
+<div data-exercise-08-47>worker-thread detail 47</div>
+<div data-exercise-08-48>worker-thread detail 48</div>
+<div data-exercise-08-49>worker-thread detail 49</div>
+<div data-exercise-08-50>worker-thread detail 50</div>
+<div data-exercise-08-51>worker-thread detail 51</div>
+<div data-exercise-08-52>worker-thread detail 52</div>
+<div data-exercise-08-53>worker-thread detail 53</div>
+<div data-exercise-08-54>worker-thread detail 54</div>
+<div data-exercise-08-55>worker-thread detail 55</div>
+<div data-exercise-08-56>worker-thread detail 56</div>
+<div data-exercise-08-57>worker-thread detail 57</div>
+<div data-exercise-08-58>worker-thread detail 58</div>
+<div data-exercise-08-59>worker-thread detail 59</div>
+<div data-exercise-08-60>worker-thread detail 60</div>
+<div data-exercise-08-61>worker-thread detail 61</div>
+<div data-exercise-08-62>worker-thread detail 62</div>
+<div data-exercise-08-63>worker-thread detail 63</div>
+<div data-exercise-08-64>worker-thread detail 64</div>
+<div data-exercise-08-65>worker-thread detail 65</div>
+<div data-exercise-08-66>worker-thread detail 66</div>
+<div data-exercise-08-67>worker-thread detail 67</div>
+<div data-exercise-08-68>worker-thread detail 68</div>
+<div data-exercise-08-69>worker-thread detail 69</div>
+<div data-exercise-08-70>worker-thread detail 70</div>
+<div data-exercise-08-71>worker-thread detail 71</div>
+<div data-exercise-08-72>worker-thread detail 72</div>
+<div data-exercise-08-73>worker-thread detail 73</div>
+<div data-exercise-08-74>worker-thread detail 74</div>
+<div data-exercise-08-75>worker-thread detail 75</div>
+<div data-exercise-08-76>worker-thread detail 76</div>
+<div data-exercise-08-77>worker-thread detail 77</div>
+<div data-exercise-08-78>worker-thread detail 78</div>
+<div data-exercise-08-79>worker-thread detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>

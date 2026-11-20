@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>login-card</title>
+<style>
+:root{--accent16:hsl(144 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 16: login-card</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='login-card';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-16-42>login-card detail 42</div>
+<div data-exercise-16-43>login-card detail 43</div>
+<div data-exercise-16-44>login-card detail 44</div>
+<div data-exercise-16-45>login-card detail 45</div>
+<div data-exercise-16-46>login-card detail 46</div>
+<div data-exercise-16-47>login-card detail 47</div>
+<div data-exercise-16-48>login-card detail 48</div>
+<div data-exercise-16-49>login-card detail 49</div>
+<div data-exercise-16-50>login-card detail 50</div>
+<div data-exercise-16-51>login-card detail 51</div>
+<div data-exercise-16-52>login-card detail 52</div>
+<div data-exercise-16-53>login-card detail 53</div>
+<div data-exercise-16-54>login-card detail 54</div>
+<div data-exercise-16-55>login-card detail 55</div>
+<div data-exercise-16-56>login-card detail 56</div>
+<div data-exercise-16-57>login-card detail 57</div>
+<div data-exercise-16-58>login-card detail 58</div>
+<div data-exercise-16-59>login-card detail 59</div>
+<div data-exercise-16-60>login-card detail 60</div>
+<div data-exercise-16-61>login-card detail 61</div>
+<div data-exercise-16-62>login-card detail 62</div>
+<div data-exercise-16-63>login-card detail 63</div>
+<div data-exercise-16-64>login-card detail 64</div>
+<div data-exercise-16-65>login-card detail 65</div>
+<div data-exercise-16-66>login-card detail 66</div>
+<div data-exercise-16-67>login-card detail 67</div>
+<div data-exercise-16-68>login-card detail 68</div>
+<div data-exercise-16-69>login-card detail 69</div>
+<div data-exercise-16-70>login-card detail 70</div>
+<div data-exercise-16-71>login-card detail 71</div>
+<div data-exercise-16-72>login-card detail 72</div>
+<div data-exercise-16-73>login-card detail 73</div>
+<div data-exercise-16-74>login-card detail 74</div>
+<div data-exercise-16-75>login-card detail 75</div>
+<div data-exercise-16-76>login-card detail 76</div>
+<div data-exercise-16-77>login-card detail 77</div>
+<div data-exercise-16-78>login-card detail 78</div>
+<div data-exercise-16-79>login-card detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>

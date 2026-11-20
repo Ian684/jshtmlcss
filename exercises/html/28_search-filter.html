@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>search-filter</title>
+<style>
+:root{--accent28:hsl(252 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 28: search-filter</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='search-filter';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-28-42>search-filter detail 42</div>
+<div data-exercise-28-43>search-filter detail 43</div>
+<div data-exercise-28-44>search-filter detail 44</div>
+<div data-exercise-28-45>search-filter detail 45</div>
+<div data-exercise-28-46>search-filter detail 46</div>
+<div data-exercise-28-47>search-filter detail 47</div>
+<div data-exercise-28-48>search-filter detail 48</div>
+<div data-exercise-28-49>search-filter detail 49</div>
+<div data-exercise-28-50>search-filter detail 50</div>
+<div data-exercise-28-51>search-filter detail 51</div>
+<div data-exercise-28-52>search-filter detail 52</div>
+<div data-exercise-28-53>search-filter detail 53</div>
+<div data-exercise-28-54>search-filter detail 54</div>
+<div data-exercise-28-55>search-filter detail 55</div>
+<div data-exercise-28-56>search-filter detail 56</div>
+<div data-exercise-28-57>search-filter detail 57</div>
+<div data-exercise-28-58>search-filter detail 58</div>
+<div data-exercise-28-59>search-filter detail 59</div>
+<div data-exercise-28-60>search-filter detail 60</div>
+<div data-exercise-28-61>search-filter detail 61</div>
+<div data-exercise-28-62>search-filter detail 62</div>
+<div data-exercise-28-63>search-filter detail 63</div>
+<div data-exercise-28-64>search-filter detail 64</div>
+<div data-exercise-28-65>search-filter detail 65</div>
+<div data-exercise-28-66>search-filter detail 66</div>
+<div data-exercise-28-67>search-filter detail 67</div>
+<div data-exercise-28-68>search-filter detail 68</div>
+<div data-exercise-28-69>search-filter detail 69</div>
+<div data-exercise-28-70>search-filter detail 70</div>
+<div data-exercise-28-71>search-filter detail 71</div>
+<div data-exercise-28-72>search-filter detail 72</div>
+<div data-exercise-28-73>search-filter detail 73</div>
+<div data-exercise-28-74>search-filter detail 74</div>
+<div data-exercise-28-75>search-filter detail 75</div>
+<div data-exercise-28-76>search-filter detail 76</div>
+<div data-exercise-28-77>search-filter detail 77</div>
+<div data-exercise-28-78>search-filter detail 78</div>
+<div data-exercise-28-79>search-filter detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>

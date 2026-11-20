@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>number-guess</title>
+<style>
+:root{--accent25:hsl(225 68% 48%)}
+body{margin:0;font-family:system-ui;background:#edf2f7}
+main{max-width:760px;margin:48px auto;padding:20px}
+article{background:white;border-radius:18px;padding:28px;box-shadow:0 18px 40px #ccd5df}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px}
+input,button{min-height:44px;font:inherit}
+#output{min-height:72px;margin-top:16px;padding:16px;background:#f8fafc}
+canvas{width:100%;height:160px;background:#111827}
+</style>
+</head>
+<body>
+<main><article>
+<h1>Exercise 25: number-guess</h1>
+<div class="controls"><input id="value" value="12"><button id="run">Run</button></div>
+<div id="output">Waiting</div>
+<canvas id="surface" width="720" height="160"></canvas>
+</article></main>
+<script>
+const topic='number-guess';
+const input=document.querySelector('#value');
+const output=document.querySelector('#output');
+const canvas=document.querySelector('#surface');
+const context=canvas.getContext('2d');
+document.querySelector('#run').onclick=()=>{
+const number=Number(input.value);
+if(!Number.isFinite(number)){output.textContent='finite number required';return;}
+const result=number*number+number*3;
+output.textContent=`${topic}: ${result}`;
+context.clearRect(0,0,canvas.width,canvas.height);
+context.fillStyle='#2563eb';
+<div data-exercise-25-42>number-guess detail 42</div>
+<div data-exercise-25-43>number-guess detail 43</div>
+<div data-exercise-25-44>number-guess detail 44</div>
+<div data-exercise-25-45>number-guess detail 45</div>
+<div data-exercise-25-46>number-guess detail 46</div>
+<div data-exercise-25-47>number-guess detail 47</div>
+<div data-exercise-25-48>number-guess detail 48</div>
+<div data-exercise-25-49>number-guess detail 49</div>
+<div data-exercise-25-50>number-guess detail 50</div>
+<div data-exercise-25-51>number-guess detail 51</div>
+<div data-exercise-25-52>number-guess detail 52</div>
+<div data-exercise-25-53>number-guess detail 53</div>
+<div data-exercise-25-54>number-guess detail 54</div>
+<div data-exercise-25-55>number-guess detail 55</div>
+<div data-exercise-25-56>number-guess detail 56</div>
+<div data-exercise-25-57>number-guess detail 57</div>
+<div data-exercise-25-58>number-guess detail 58</div>
+<div data-exercise-25-59>number-guess detail 59</div>
+<div data-exercise-25-60>number-guess detail 60</div>
+<div data-exercise-25-61>number-guess detail 61</div>
+<div data-exercise-25-62>number-guess detail 62</div>
+<div data-exercise-25-63>number-guess detail 63</div>
+<div data-exercise-25-64>number-guess detail 64</div>
+<div data-exercise-25-65>number-guess detail 65</div>
+<div data-exercise-25-66>number-guess detail 66</div>
+<div data-exercise-25-67>number-guess detail 67</div>
+<div data-exercise-25-68>number-guess detail 68</div>
+<div data-exercise-25-69>number-guess detail 69</div>
+<div data-exercise-25-70>number-guess detail 70</div>
+<div data-exercise-25-71>number-guess detail 71</div>
+<div data-exercise-25-72>number-guess detail 72</div>
+<div data-exercise-25-73>number-guess detail 73</div>
+<div data-exercise-25-74>number-guess detail 74</div>
+<div data-exercise-25-75>number-guess detail 75</div>
+<div data-exercise-25-76>number-guess detail 76</div>
+<div data-exercise-25-77>number-guess detail 77</div>
+<div data-exercise-25-78>number-guess detail 78</div>
+<div data-exercise-25-79>number-guess detail 79</div>
+context.fillRect(result%620,20,48,48);
+};
+</script>
+</body>
+</html>
